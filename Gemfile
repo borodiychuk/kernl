@@ -58,4 +58,5 @@ group :development do
   gem "capistrano-bundler", :require => false
   gem "capistrano3-puma",   :require => false
   gem "capistrano-sidekiq", :require => false
+  gem "capistrano-git-submodule-strategy", "~> 0.1", :github => "ekho/capistrano-git-submodule-strategy"
 end

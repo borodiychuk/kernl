@@ -22,6 +22,7 @@ set :linked_dirs,  fetch(:linked_dirs, []).push("log", "tmp/pids", "tmp/cache", 
 # SCM Settings
 set :scm,    :git
 set :branch, "develop"
+set :git_strategy, Capistrano::Git::SubmoduleStrategy
 
 # RVM settings
 set :rvm_ruby_version, "2.2"

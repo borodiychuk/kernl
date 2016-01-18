@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/ekho/capistrano-git-submodule-strategy.git
+  revision: 6961ced9906c25b43c6cd014014fde45767c8451
+  specs:
+    capistrano-git-submodule-strategy (0.1.18)
+      capistrano (~> 3.1)
+
 GEM
   remote: https://rubygems.org/
   remote: https://rails-assets.org/
@@ -273,6 +280,7 @@ DEPENDENCIES
   byebug
   capistrano
   capistrano-bundler
+  capistrano-git-submodule-strategy (~> 0.1)!
   capistrano-rails
   capistrano-rvm
   capistrano-sidekiq
