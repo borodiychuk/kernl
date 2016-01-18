@@ -1,7 +1,7 @@
 # config valid only for current version of Capistrano
 lock '3.4.0'
 
-set :repo_url,      "git@bitbucket.org:ordnung-kernl/rails-app.git"
+set :repo_url,      "git@bitbucket.org:kernl/rails-app.git"
 set :application,   "kernl"
 set :user,          "dre"
 set :deploy_to,     "/srv/#{fetch(:application)}"
