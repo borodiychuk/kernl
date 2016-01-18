@@ -39,5 +39,12 @@ module Kernl
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.smtp_settings = Settings.smtp.to_hash
 
+    # CORS
+    config.middleware.insert_before 0, "Rack::Cors" do
+      allow do
+        origins '*'
+        resource '*', :headers => :any, :methods => [:get, :post, :options]
+      end
+    end
   end
 end
