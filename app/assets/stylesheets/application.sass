@@ -1,0 +1,98 @@
+@charset "UTF-8"
+
+@import uikit/uikit-mixins
+
+@import shared/kernl-variables
+@import shared/uikit-theme-kernl
+@import shared/uikit-variables
+@import shared/uikit-theme-kernl/button
+
+@import uikit/uikit
+@import uikit/components/notify
+@import uikit/components/form-password
+@import uikit/components/placeholder
+@import uikit/components/progress
+
+@import angular-loading-bar
+
+@import shared/form
+@import shared/icons-fix
+@import shared/loading-bar
+@import shared/table
+@import shared/noselect
+
+@import ng-wig
+@import datetimepicker
+
+//
+//  Layout
+//
+
+body
+
+  &>header
+    width: 100%
+    position: fixed
+    left: 0
+    top: 0
+    z-index: 100
+    background: $kernl-bg-black
+    color: $kernl-font-gray
+
+  &>footer
+    background: $kernl-bg-black
+    color: $kernl-font-gray
+    width: 100%
+    position: fixed
+    left: 0
+    bottom: 0
+    font-size: 0.9em
+    z-index: 100
+    a
+      color: inherit
+      &:hover
+        color: lighten($kernl-font-gray, 20%)
+        text-decoration: none
+
+  &>main
+    margin: ($navbar-nav-height + 45px) auto
+
+
+//
+//  Logo
+//
+.uk-navbar-brand
+  &>img
+    height: $navbar-nav-height - 30px
+
+
+//
+//  Icons fix
+//
+i.uk-icon-fw
+  width: 1.28571429em
+  text-align: center
+
+
+//
+// ngWig
+//
+
+.nw-editor
+  height: 150px
+
+
+//
+//  Sortable
+//
+
+.sortable-thumbnail-placeholder
+  @extend .uk-thumbnail
+  @extend .uk-margin-small-right
+  @extend .uk-margin-small-bottom
+  width: 110px
+  height: 110px
+  vertical-align: top
+  visibility: hidden
+
+

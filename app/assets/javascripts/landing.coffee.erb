@@ -1,0 +1,65 @@
+#= require jquery
+#= require uikit/uikit
+#= require uikit/components/notify
+#= require angular
+#= require_tree ./modules
+#= require_tree ./resources
+#= require angular-cookie
+#= require angular-loading-bar
+
+
+angular.module("app", [
+  "app.services"
+  "app.auth"
+  "angular-loading-bar"
+  "app.resources.v1"
+  "app.resources.v1.private"
+  "app.translation"
+])
+
+
+.constant("IDENTIFIER", "frontend")
+
+#################################################################################################
+##
+##  Routes and providers configuration
+##
+
+.config([
+  "cfpLoadingBarProvider"
+  (cfpLoadingBarProvider) ->
+
+    # Configure loading bar
+    cfpLoadingBarProvider.includeSpinner = false
+    cfpLoadingBarProvider.latencyThreshold = 5
+
+])
+
+.controller "AuthCtrl", [
+  "$scope", "$auth", "$filter", "UI"
+  ($scope,   $auth,   $filter,   UI) ->
+
+    (reset = ->
+      $scope.mode = "login"
+      $scope.emailRepeat = ""
+
+      $scope.loginData =
+        email:    ""
+        password: ""
+        _silent_success:  true
+        _marker:  "login"
+
+      UI.clean()
+    )()
+
+    $scope.$on "auth:login-success", reset
+
+
+    $scope.login = ->
+      # Do not proceed if login process is running
+      return if $auth.dfd
+      $auth.submitLogin($scope.loginData, config: "email").then ->
+        UI.notify "success", $filter("translate")("auth.login_successful")
+
+
+]

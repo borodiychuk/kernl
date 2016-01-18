@@ -1,0 +1,3 @@
+[submodule "vendor/bower-uikit"]
+	path = vendor/bower-uikit
+	url = https://github.com/uikit/bower-uikit.git

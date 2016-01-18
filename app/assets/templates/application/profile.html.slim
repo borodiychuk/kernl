@@ -1,0 +1,54 @@
+article.uk-article
+  .uk-grid
+    .uk-width-2-3
+      h1.uk-article-title
+        i.uk-icon.uk-icon-cog.uk-text-muted>
+        | Benutzerkonto bearbeiten
+    .uk-width-1-3.uk-text-right
+      button.uk-button.uk-button-primary.uk-button-large< ng-disabled="profileForm.$invalid" ng-click="save()" ng-show="profileForm.$dirty"
+        i.uk-icon.uk-icon-check>
+        | Anwenden
+  p.uk-article-meta Verwalten Sie hier Ihre Benutzerkontodaten
+
+
+  hr.uk-article-divider
+
+  form.uk-form name="profileForm"
+    .uk-grid
+      .uk-width-1-2.uk-form-horizontal
+
+        fieldset.uk-margin-large-bottom
+          legend Daten
+          .uk-form-row
+            label.uk-form-label Vorname
+            .uk-form-controls
+              input.uk-width-1-1 type="text" ng-model="profile.name" placeholder="" required=""
+
+      .uk-width-1-3.uk-push-1-6.uk-form-stacked
+
+        fieldset.uk-margin-large-bottom
+          legend Anmeldung
+          .uk-form-row
+            label.uk-form-label E-Mail (für Login)
+            .uk-form-controls
+              input.uk-width-1-1 type="email" ng-model="profile.email" placeholder="" required="" disabled=""
+          .uk-form-row
+            label.uk-form-label Neues Passwort
+            .uk-form-controls
+              .uk-form-password.uk-width-1-1
+                input.uk-width-1-1 type="password" ng-model="profile.password"
+                a.uk-form-password-toggle data-uk-form-password="" Anzeigen
+          .uk-form-row ng-show="profile.password && profile.password_confirmation_needed"
+            label.uk-form-label Bitte geben Sie Ihr altes Passwort ein, um die Passwortänderung zu bestätigen
+            .uk-form-controls
+              input.uk-width-1-1 type="password" ng-model="profile.current_password" placeholder="" ng-required="profile.password && profile.password_confirmation_needed"
+
+
+  .uk-margin-large-top ng-show="profileForm.$dirty"
+    hr.uk-article-divider
+    button.uk-button.uk-button.uk-float-left ng-click="reset()"
+      i.uk-icon.uk-icon-times>
+      | Abbrechen
+    button.uk-button.uk-button-primary.uk-float-right ng-disabled="profileForm.$invalid" ng-click="save()"
+      i.uk-icon.uk-icon-check>
+      | Anwenden

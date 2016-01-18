@@ -1,0 +1,2 @@
+class GenericException < StandardError
+end

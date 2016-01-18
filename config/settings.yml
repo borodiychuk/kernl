@@ -1,0 +1,35 @@
+# Installation identifier
+identifier: <%= ENV["APP_IDENTIFIER"] %>
+
+# The application version. Passed via the web-page and in each API-response. As soon as this version is changed, the web-interface reloads the page to get the most recent assets
+version: 0.0.0
+
+# Secret key base instead of secrets.yml file
+secret_key_base: <%= ENV["SECRET_KEY_BASE"] %>
+
+# Database connection instead of database file
+database: <%= ENV["DATABASE_URL"] %>
+
+# App self url
+url: <%= ENV["APP_URL"] %>
+
+# Rollbar options
+rollbar:
+  access_token_server: <%= ENV["ROLLBAR_TOKEN_SERVER"] %>
+  access_token_client: <%= ENV["ROLLBAR_TOKEN_CLIENT"] %>
+
+# SMTP
+smtp:
+  authentication: plain
+  address:        <%= ENV["MAILGUN_SMTP_SERVER"] %>
+  port:           <%= ENV["MAILGUN_SMTP_PORT"] %>
+  domain:         <%= ENV["MAILGUN_DOMAIN"] %>
+  user_name:      <%= ENV["MAILGUN_SMTP_LOGIN"] %>
+  password:       <%= ENV["MAILGUN_SMTP_PASSWORD"] %>
+
+# Amazon S3 access
+s3:
+  access_key_id:     <%= ENV["AWS_ACCESS_KEY_ID"] %>
+  secret_access_key: <%= ENV["AWS_SECRET_ACCESS_KEY"] %>
+  bucket_name:       <%= ENV["S3_DRAGONFLY_BUCKET_NAME"] %>
+  region:            <%= ENV["S3_DRAGONFLY_BUCKET_REGION"] %>

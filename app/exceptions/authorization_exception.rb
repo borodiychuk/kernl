@@ -1,0 +1,2 @@
+class AuthorizationException < GenericException
+end

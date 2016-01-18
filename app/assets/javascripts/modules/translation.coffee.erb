@@ -1,0 +1,8 @@
+#= require angular-translate
+angular.module("app.translation", ["pascalprecht.translate"])
+
+.config ($translateProvider) ->
+  $translateProvider.translations "de", <%= I18n.t("ui").to_json %>
+  $translateProvider.preferredLanguage "de"
+  $translateProvider.useSanitizeValueStrategy null
+

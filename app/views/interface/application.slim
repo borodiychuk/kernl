@@ -1,0 +1,29 @@
+body
+
+  header
+    .uk-container.uk-container-center
+      nav.uk-navbar
+        span.uk-navbar-brand
+          i.uk-icon.uk-icon-diamond.uk-text-danger>
+          b kernl
+        ul.uk-navbar-nav ng-controller="ProjectsListCtrl" ng-show="$root.user.id"
+          li ui-sref-active="uk-active" ng-repeat="p in projects.data.display"
+            a ui-sref="projects.project.view({project_id: p.id})"
+              i.uk-icon.uk-icon-folder-open> ng-show="p.enabled"
+              | {{ p.name }}
+        .uk-navbar-flip
+          ul.uk-navbar-nav
+            li ui-sref-active-if="profile" ng-show="$root.user.id"
+              a ui-sref="profile"
+                i.uk-icon.uk-icon-cog.uk-text-warning>
+                | Benutzerkonto
+            li
+              a ng-click="signOut()"
+                i.uk-icon.uk-icon-power-off>
+                | Abmelden
+
+  main
+    .uk-container.uk-container-center.uk-margin-large-bottom
+      div ui-view=""
+
+  = render "shared/footer"

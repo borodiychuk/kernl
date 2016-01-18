@@ -1,0 +1,155 @@
+#= require datetimepicker
+
+angular.module("app.directives", [])
+
+# https://github.com/angular-ui/ui-router/issues/1431#issuecomment-121929944
+.directive("uiSrefActiveIf", ["$state", ($state) ->
+  restrict:   "A"
+  controller: ["$scope", "$element", "$attrs", ($scope, $element, $attrs) ->
+    state = $attrs.uiSrefActiveIf
+    update = ->
+      if $state.includes(state) || $state.is(state)
+        $element.addClass "uk-active"
+      else
+        $element.removeClass "uk-active"
+    $scope.$on "$stateChangeSuccess", update
+    update()
+]])
+
+
+##########################################################################
+##
+##  Pagination
+##
+
+.directive("paginationFor", ->
+  restrict: "A"
+  template: '
+    <div ng-show="table.data.total > 5" class="uk-grid uk-margin-large-top uk-margin-large-bottom">
+
+      <div class="uk-width-9-10">
+        <ul class="uk-pagination uk-pagination-left" ng-show="table.data.pages > 1">
+          <li ng-class="{\'uk-disabled\': table.params.page == 1}">
+            <a href ng-hide="table.params.page == 1" ng-click="table.setPage(table.params.page - 1)"><i class="uk-icon-angle-double-left"></i></a>
+            <span ng-show="table.params.page == 1"><i class="uk-icon-angle-double-left"></i></span>
+          </li>
+          <li ng-repeat="page in table.pagination track by $index" ng-class="{\'uk-active\': table.params.page == page, \'uk-disabled\': !page}">
+            <a href ng-click="table.setPage(page)" ng-show="page && table.params.page != page">{{ page }}</a>
+            <span ng-hide="page">&hellip;</span>
+            <span ng-show="page && table.params.page == page">{{ page }}</span>
+          </li>
+          <li ng-class="{\'uk-disabled\': table.params.page == table.data.pages}">
+            <a href ng-hide="table.params.page == table.data.pages" ng-click="table.setPage(table.params.page + 1)"><i class="uk-icon-angle-double-right"></i></a>
+            <span ng-show="table.params.page == table.data.pages"><i class="uk-icon-angle-double-right"></i></span>
+          </li>
+        </ul>
+        &nbsp;
+      </div>
+
+      <div class="uk-width-1-10 uk-text-right">
+        <div class="uk-button-dropdown uk-dropdown-close" data-uk-dropdown="{mode:\'click\', pos:\'bottom-right\'}">
+          <button class="uk-button" ng-hide="table.params.limit == 1000000">{{ table.params.limit }} <i class="uk-icon-caret-down"></i></button>
+          <button class="uk-button" ng-show="table.params.limit == 1000000">{{ "tables.pagination.all" | translate }} <i class="uk-icon-caret-down"></i></button>
+          <div class="uk-dropdown uk-dropdown-small">
+            <ul class="uk-nav uk-nav-dropdown">
+              <li class="uk-text-left" ng-repeat="l in limits"><a href ng-click="setLimit(l)">{{ l }}</a></li>
+              <li class="uk-text-left" ng-show="table.config.type == \'full\'"><a href ng-click="setLimit(1000000)">{{ "tables.pagination.all" | translate }}</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>'
+  replace: true
+  scope:
+    table: "=paginationFor"
+  controller: ["$scope", (self) ->
+
+    self.limits = [5,10,20,50,100]
+    self.setLimit = (limit) ->
+      self.table.params.limit = limit
+      self.showDropdown = false
+  ]
+)
+
+.directive("simplePaginationFor", ->
+  restrict: "A"
+  template: '
+    <ul class="uk-pagination uk-pagination-left" ng-show="table.data.pages > 1">
+      <li ng-class="{\'uk-disabled\': table.params.page == 1}">
+        <a href ng-hide="table.params.page == 1" ng-click="table.setPage(table.params.page - 1)"><i class="uk-icon-angle-double-left"></i></a>
+        <span ng-show="table.params.page == 1"><i class="uk-icon-angle-double-left"></i></span>
+      </li>
+      <li ng-class="{\'uk-disabled\': table.params.page == table.data.pages}">
+        <a href ng-hide="table.params.page == table.data.pages" ng-click="table.setPage(table.params.page + 1)"><i class="uk-icon-angle-double-right"></i></a>
+        <span ng-show="table.params.page == table.data.pages"><i class="uk-icon-angle-double-right"></i></span>
+      </li>
+    </ul>'
+  replace: true
+  scope:
+    table: "=simplePaginationFor"
+)
+
+
+.directive("datetimepicker", ->
+  restrict: "A"
+  require: 'ngModel',
+  scope:
+    options:   "=datetimepicker"
+    ngModel: "="
+  link : ($scope, element, attrs, ctrl) ->
+    options =
+      dayOfWeekStart: 1
+      format: "d.m.Y H:i"
+      minDate: 0
+      lang: "<%= I18n.locale %>"
+      closeOnDateSelect: true
+      onChangeDateTime: (value, $input) ->
+        $scope.$apply ->
+          $scope.ngModel = value
+          ctrl.$$parentForm.$setDirty() if ctrl.$$parentForm?
+    angular.extend options, $scope.options
+    element.datetimepicker options
+)
+
+# https://github.com/angular-ui/ui-router/issues/1431#issuecomment-121929944
+.directive("dataUkLightbox", ["$timeout", ($timeout) ->
+  restrict: "A"
+  scope:
+    params: "=dataUkLightbox"
+  link: ($scope, element, attrs) ->
+    $timeout ->
+      UIkit.lightbox element, $scope.params
+])
+
+
+##########################################################################
+##
+##  Scroll to particular element
+##  See http://nadeemkhedr.com/angularjs-scroll-to-element-using-directives/
+##
+
+.directive("scrollTo", ->
+  restrict: "A"
+  link: ($scope, element, attrs) ->
+    element.click ->
+      element = jQuery "[scroll-element='#{attrs.scrollTo}']"
+      if element.length
+        jQuery("html, body").animate
+          scrollTop: (element[0].offsetTop - 100)
+)
+
+
+##########################################################################
+##
+##  Proxy click to another element to sumulate it
+##
+
+.directive("proxyClickToDatepicker", ["$timeout", ($timeout) ->
+  restrict: "A"
+  link: ($scope, element, attrs) ->
+    element.click ->
+      $timeout (->
+        jQuery(attrs.proxyClickToDatepicker).trigger "focus.datepicker.uikit"
+      ), 100
+])

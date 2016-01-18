@@ -1,0 +1,4 @@
+angular.module("app.constants", [])
+
+# Countries list
+.constant("COUNTRIES", <%= Hash[ISO3166::Country.translations(I18n.locale).natural_sort_by(&:last)].to_json %>)

@@ -1,0 +1,291 @@
+angular.module("app.services", [])
+
+
+#####################################################################################
+##
+##  Handle all exceptions via rollbar
+##
+
+.factory("$exceptionHandler", ["$log", ($log) ->
+  (exception, cause) ->
+    $log.info exception
+    Rollbar.error exception, (error, data) ->
+      if error
+        $log.debug "* Error while reporting error to Rollbar"
+      else
+        $log.debug "* Error successfully reported to Rollbar. UUID:", data.result.uuid
+])
+
+
+#####################################################################################
+##
+##  Binds actions on different XHR events that we have to trace
+##  It is possible to add params to request to mute the notifications
+##  Availiblae params: _silent, _silent_success, _silent_error
+##  Checks version of the application and reload s assets on version mismatch
+##
+
+.factory("XHREventsInterceptor", ["$rootScope", "$q", "UI", "$document", "$filter", ($rootScope, $q, UI, $document, $filter) ->
+  isSilent = (request, action) ->
+    return true if request.config.url.match(/^\/api\/auth\b/)
+    return true if request.config.params?._silent? || request.config.data?._silent?
+    switch action
+      when "success"
+        return true if request.config.params?._silent_success? || request.config.data?._silent_success?
+      when "error"
+        return true if request.config.params?._silent_error? || request.config.data?._silent_error?
+    false
+
+  response: (request) ->
+    # Process notifications
+    unless isSilent(request, "success")
+      switch request.config.method
+        when "PUT"
+          UI.notify "success", $filter("translate")("actions.updated")
+        when "POST"
+          UI.notify "success", $filter("translate")("actions.saved")
+        when "DELETE"
+          UI.notify "success", $filter("translate")("actions.deleted")
+    # Process reload on version mismatch
+    version = request.headers "X-Version"
+    if version? && version isnt "<%= Settings.version %>"
+      UI.notify "warning", $filter("translate")("misc.force_reload_warning")
+      $document[0].location.reload()
+    # Return value
+    request || $q.when request
+
+  responseError: (request) ->
+    unless isSilent(request, "error")
+      switch request.status
+        when 0, -1
+          # Request was aborted by us
+          angular.noop()
+        when 401,403
+          $rootScope.$broadcast "auth:lost"
+          UI.notify "danger", $filter("translate")("auth.missing")
+        when 404
+          UI.notify "danger", $filter("translate")("errors.not_found")
+        when 400
+          UI.notify("warning", e) for e in request.data.errors
+        when 500
+          if request.data?.errors
+            UI.notify("danger", e) for e in request.data.errors
+          else
+            UI.notify "danger"
+        else
+            UI.notify "danger"
+    $q.reject request
+
+])
+
+.config(["$httpProvider", (h) -> h.interceptors.push("XHREventsInterceptor")])
+
+
+
+#####################################################################################
+##
+##  Loading markers automated
+##
+
+.factory("XHRLoadingStatesInterceptor", ["$rootScope", "$q", ($rootScope, $q) ->
+  $rootScope.loading = []
+
+  setMarker = (config, value) ->
+    marker = config.params._marker if config.params?._marker
+    marker = config.data._marker   if config.data?._marker
+    if marker?
+      $rootScope.loading[marker] = value
+
+  request: (config) ->
+    setMarker config, true
+    config
+
+  response: (request) ->
+    setMarker request.config, false
+    request
+
+  responseError: (request) ->
+    setMarker request.config, false
+    $q.reject request
+
+])
+
+.config(["$httpProvider", (h) -> h.interceptors.push("XHRLoadingStatesInterceptor")])
+
+
+
+#####################################################################################
+##
+##  Additional messaged from server
+##
+
+.factory("XHRMessagesInterceptor", ["$rootScope", "$q", "UI", ($rootScope, $q, UI) ->
+
+  messenger = (headersGetter) ->
+    if message = headersGetter("X-Message")
+      UI.notify "warning", message
+
+  response: (request) ->
+    messenger request.headers
+    request
+
+  responseError: (request) ->
+    messenger request.headers
+    $q.reject request
+
+])
+
+.config(["$httpProvider", (h) -> h.interceptors.push("XHRMessagesInterceptor")])
+
+
+#####################################################################################
+##
+##  Nice booleans in GET
+##
+
+.factory("XHRGETBooleansInterceptor", ["$rootScope", "$q", "UI", ($rootScope, $q, UI) ->
+
+  request: (config) ->
+    falses = []
+    for k, v of config.params
+      falses.push k if v is false
+    for k in falses
+      delete config.params[k]
+    config
+
+])
+
+.config(["$httpProvider", (h) -> h.interceptors.push("XHRGETBooleansInterceptor")])
+
+
+#####################################################################################
+##
+##  Parse dates in JSON to JS Date objects
+##
+
+.config(["$httpProvider", (h) ->
+
+  convertDateStringsToDates = (input) ->
+    regexISO8601 = /^(\d{4}|\+\d{6})(?:-(\d{2})(?:-(\d{2})(?:T(\d{2}):(\d{2}):(\d{2})\.(\d{1,})(Z|([\-+])(\d{2}):(\d{2}))?)?)?)?$/
+    return input if typeof input isnt "object"
+    for key of input
+      continue unless input.hasOwnProperty(key)
+      value = input[key]
+      if typeof value is "string" && ((match = value.match(regexISO8601)) && key.match(/_at$/))
+        milliseconds = Date.parse(match[0])
+        input[key] = new Date(milliseconds) if (!isNaN(milliseconds))
+      else if typeof value is "object"
+        convertDateStringsToDates(value)
+
+  h.defaults.transformResponse.push (response) ->
+    convertDateStringsToDates response
+    response
+
+])
+
+
+#####################################################################################
+##
+##  Parse prices into float, as Rails returns them stringified
+##
+
+.config(["$httpProvider", (h) ->
+
+  convertPricesToDecimal = (input) ->
+    return input if typeof input isnt "object"
+    for key of input
+      continue unless input.hasOwnProperty(key)
+      value = input[key]
+      if typeof value is "string" && ((match = value.match(/^[\d\.]+$/)) && key.match(/^(price_|provision_)/))
+        input[key] = parseFloat match[0]
+      else if typeof value is "object"
+        convertPricesToDecimal(value)
+
+  h.defaults.transformResponse.push (response) ->
+    convertPricesToDecimal response
+    response
+
+])
+
+
+
+#####################################################################################
+##
+##  UI: Notify (info, success, warning, danger)
+##
+
+.factory("UI", ["$rootScope", "$filter", ($rootScope, $filter) ->
+
+  jQuery("html").on
+    "show.uk.modal": -> $rootScope.$broadcast "modal:open"
+    "hide.uk.modal": -> $rootScope.$broadcast "modal:close"
+
+  notify: (status = "info", message = null) ->
+    switch status
+      when "info"
+        message = $filter("translate")("default_notifications.info")    unless message
+        timeout = 1000
+      when "success"
+        message = $filter("translate")("default_notifications.success") unless message
+        timeout = 1000
+      when "warning"
+        message = $filter("translate")("default_notifications.warning") unless message
+        timeout = 20000
+      when "danger"
+        message = $filter("translate")("default_notifications.danger")  unless message
+        timeout = 30000
+    jQuery.UIkit.notify
+      message : message
+      status  : status
+      timeout : timeout
+      pos     : "bottom-right"
+
+  confirm: (callback, message = "Are you sure?") ->
+    UIkit.modal.confirm $filter("translate")("misc.confirmation"), callback
+
+  alert: (message) ->
+    UIkit.modal.alert message
+
+  prompt: (message, value, callback) ->
+    UIkit.modal.prompt message, value, callback
+
+  block: (message = "") ->
+    UIkit.modal.blockUI message
+
+  # Clean from modal
+  clean: ->
+    esc = jQuery.Event "keydown", keyCode: 27
+    jQuery("html").trigger esc
+
+  # Open modal
+  modal: (selector) ->
+    UIkit.modal(selector).show()
+
+])
+
+
+
+
+#####################################################################################
+##
+##  Warn user if he leaves page on some conrition
+##
+
+.factory("StateChangeWarner", ["$parse", "$filter", (parse, $filter) ->
+
+  ##
+  ##  Allowed options:
+  ##  except: ["state.name1", "state.name2", ...]
+  ##
+
+  ($scope, condition, options = {}) ->
+    conditioinChecker = parse condition
+    $scope.$on "$stateChangeStart", (event, next, nextParams, from, fromParams) ->
+      # Omit checking if state is listed in excepted
+      return if options.except? and next.name in options.except
+      if conditioinChecker($scope)
+        unless confirm $filter("translate")("misc.unsaved_data_warning")
+          event.preventDefault();
+
+])
+
