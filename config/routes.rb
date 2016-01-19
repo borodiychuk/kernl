@@ -4,6 +4,10 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
+      namespace :public do
+        resources :products
+        resources :requests
+      end
       namespace :private do
         resource :profile
         resources :projects
