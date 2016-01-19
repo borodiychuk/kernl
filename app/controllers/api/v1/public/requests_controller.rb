@@ -1,4 +1,4 @@
-class Api::V1::Public::RequestsController < Api::V1::ApiController
+class Api::V1::Public::RequestsController < ApiController
 
   def create
     answer_ok

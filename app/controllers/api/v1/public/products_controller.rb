@@ -1,4 +1,4 @@
-class Api::V1::Public::ProductsController < Api::V1::ApiController
+class Api::V1::Public::ProductsController < ApiController
 
   def index
     render :json => []#@storage
