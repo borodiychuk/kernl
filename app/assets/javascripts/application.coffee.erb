@@ -40,6 +40,12 @@ angular.module("app", [
 
 .constant("IDENTIFIER", "application")
 
+.run(["$rootScope", "$state", ($rootScope, $state) ->
+
+  $rootScope.state = $state
+
+])
+
 #################################################################################################
 ##
 ##  Routes and providers configuration

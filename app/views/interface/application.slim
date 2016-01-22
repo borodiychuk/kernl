@@ -10,7 +10,7 @@ body
           li ui-sref-active-if="landing"
             a ui-sref="landing"
               | Startseite
-          li ng-repeat="p in projects.data.display"
+          li ng-repeat="p in projects.data.display" ng-class="{'uk-active': state.params.project_id == p.id}"
             a ui-sref="projects.project.products({project_id: p.id})"
               i.uk-icon.uk-icon-folder-open> ng-show="p.enabled"
               | {{ p.name }}
