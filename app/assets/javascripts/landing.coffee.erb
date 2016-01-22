@@ -14,7 +14,6 @@ angular.module("app", [
   "angular-loading-bar"
   "app.resources.v1"
   "app.resources.v1.private"
-  "app.translation"
 ])
 
 
@@ -36,8 +35,8 @@ angular.module("app", [
 ])
 
 .controller "AuthCtrl", [
-  "$scope", "$auth", "$filter", "UI"
-  ($scope,   $auth,   $filter,   UI) ->
+  "$scope", "$auth", "UI"
+  ($scope,   $auth,   UI) ->
 
     (reset = ->
       $scope.mode = "login"
@@ -59,7 +58,7 @@ angular.module("app", [
       # Do not proceed if login process is running
       return if $auth.dfd
       $auth.submitLogin($scope.loginData, config: "email").then ->
-        UI.notify "success", $filter("translate")("auth.login_successful")
+        UI.notify "success", "Erfolgreich eingeloggt!"
 
 
 ]

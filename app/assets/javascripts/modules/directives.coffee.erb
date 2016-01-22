@@ -48,12 +48,10 @@ angular.module("app.directives", [])
 
       <div class="uk-width-1-10 uk-text-right">
         <div class="uk-button-dropdown uk-dropdown-close" data-uk-dropdown="{mode:\'click\', pos:\'bottom-right\'}">
-          <button class="uk-button" ng-hide="table.params.limit == 1000000">{{ table.params.limit }} <i class="uk-icon-caret-down"></i></button>
-          <button class="uk-button" ng-show="table.params.limit == 1000000">{{ "tables.pagination.all" | translate }} <i class="uk-icon-caret-down"></i></button>
+          <button class="uk-button">{{ table.params.limit }} <i class="uk-icon-caret-down"></i></button>
           <div class="uk-dropdown uk-dropdown-small">
             <ul class="uk-nav uk-nav-dropdown">
               <li class="uk-text-left" ng-repeat="l in limits"><a href ng-click="setLimit(l)">{{ l }}</a></li>
-              <li class="uk-text-left" ng-show="table.config.type == \'full\'"><a href ng-click="setLimit(1000000)">{{ "tables.pagination.all" | translate }}</a></li>
             </ul>
           </div>
         </div>

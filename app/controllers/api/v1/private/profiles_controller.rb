@@ -10,9 +10,9 @@ class Api::V1::Private::ProfilesController < Api::V1::PrivateController
     if profile_params[:password].blank? || !@user.password_confirmation_needed
       @user.update_attributes! profile_params
     else
-      raise GenericException, I18n.t("errors.profile.wrong_password_confirmation") unless @user.update_with_password profile_params
+      raise GenericException, "Passwortbestätigung falsch!" unless @user.update_with_password profile_params
     end
-    headers["X-Message"] = I18n.t("alerts.profile.password_changed") unless profile_params[:password].blank?
+    headers["X-Message"] = "Password has been changed" unless profile_params[:password].blank?
     show
   end
 

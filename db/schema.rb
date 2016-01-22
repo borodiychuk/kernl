@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160116003021) do
+ActiveRecord::Schema.define(version: 20160122013807) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,17 +22,41 @@ ActiveRecord::Schema.define(version: 20160116003021) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "attachments", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table "images", force: :cascade do |t|
+    t.string   "file_uid",               null: false
+    t.string   "file_name",              null: false
+    t.integer  "ordering",   default: 0, null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.integer  "product_id",             null: false
   end
+
+  add_index "images", ["product_id"], name: "index_images_on_product_id", using: :btree
+
+  create_table "product_prices", force: :cascade do |t|
+    t.integer  "amount"
+    t.decimal  "price",      precision: 8, scale: 2
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+    t.integer  "product_id",                         null: false
+  end
+
+  add_index "product_prices", ["price"], name: "index_product_prices_on_price", using: :btree
+  add_index "product_prices", ["product_id", "amount"], name: "index_product_prices_on_product_id_and_amount", unique: true, using: :btree
+  add_index "product_prices", ["product_id"], name: "index_product_prices_on_product_id", using: :btree
 
   create_table "products", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer  "project_id", null: false
+    t.boolean  "enabled",     default: false, null: false
+    t.string   "title",       default: "",    null: false
+    t.string   "subtitle",    default: "",    null: false
+    t.string   "number",      default: "",    null: false
+    t.text     "description"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.integer  "project_id",                  null: false
   end
 
+  add_index "products", ["enabled"], name: "index_products_on_enabled", using: :btree
   add_index "products", ["project_id"], name: "index_products_on_project_id", using: :btree
 
   create_table "projects", force: :cascade do |t|
@@ -65,6 +89,8 @@ ActiveRecord::Schema.define(version: 20160116003021) do
   add_index "users", ["account_id"], name: "index_users_on_account_id", using: :btree
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
 
+  add_foreign_key "images", "products", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "product_prices", "products", on_update: :cascade, on_delete: :cascade
   add_foreign_key "products", "projects", on_update: :cascade, on_delete: :cascade
   add_foreign_key "projects", "accounts", on_update: :cascade, on_delete: :cascade
   add_foreign_key "users", "accounts", on_update: :cascade, on_delete: :cascade

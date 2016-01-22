@@ -8,7 +8,7 @@ class InterfaceController < ApplicationController
   end
 
   def landing
-    return redirect_to :action => :app if @user
+    #return redirect_to :action => :application if @user
     @base = "/"
   end
 

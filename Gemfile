@@ -36,7 +36,6 @@ gem "rails-assets-ng-wig",                  :source => "https://rails-assets.org
 gem "rails-assets-angular-google-maps",     :source => "https://rails-assets.org"
 gem "rails-assets-ng-file-upload-shim",     :source => "https://rails-assets.org"
 gem "rails-assets-angular-ui--ui-sortable", :source => "https://rails-assets.org"
-gem "rails-assets-angular-translate",       :source => "https://rails-assets.org"
 gem "rails-assets-ng-file-upload",          :source => "https://rails-assets.org"
 gem "rails-assets-ng-token-auth",           :source => "https://rails-assets.org"
 

@@ -7,8 +7,11 @@ body
           i.uk-icon.uk-icon-diamond.uk-text-danger>
           b kernl
         ul.uk-navbar-nav ng-controller="ProjectsListCtrl" ng-show="$root.user.id"
-          li ui-sref-active="uk-active" ng-repeat="p in projects.data.display"
-            a ui-sref="projects.project.view({project_id: p.id})"
+          li ui-sref-active-if="landing"
+            a ui-sref="landing"
+              | Startseite
+          li ng-repeat="p in projects.data.display"
+            a ui-sref="projects.project.products({project_id: p.id})"
               i.uk-icon.uk-icon-folder-open> ng-show="p.enabled"
               | {{ p.name }}
         .uk-navbar-flip

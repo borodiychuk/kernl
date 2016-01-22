@@ -1,0 +1,38 @@
+article.uk-article
+  .uk-grid
+    .uk-width-4-5
+      h1.uk-article-title
+        i.uk-icon.uk-icon-tags.uk-text-muted>
+        | Produkte
+    .uk-width-1-5.uk-text-right
+      a.uk-button.uk-button-large ui-sref="^.product({product_id: 'new'})"
+        i.uk-icon.uk-icon-plus>
+        | Erstellen
+  p.uk-article-meta Verwalten Sie hier Ihre Produktdaten
+
+  hr.uk-article-divider
+
+  .uk-alert.uk-text-center ng-hide="products.data.total" Keine Produkte hier
+
+  table.uk-table.uk-table-striped.uk-table-condensed.uk-table-hover ng-show="products.data.total"
+    thead
+      tr
+        th.uk-width-1-10.uk-text-right.action ng-click="products.setOrderby('id')" colspan="2"
+          | #
+          i.uk-icon.uk-text-muted< ng-class="products.headerClass('id')"
+        th.uk-width-2-10.action ng-click="products.setOrderby('number')"
+          | Nummer
+          i.uk-icon.uk-text-muted< ng-class="products.headerClass('number')"
+        th.uk-width-7-10.action ng-click="products.setOrderby('title')"
+          | Titel
+          i.uk-icon.uk-text-muted< ng-class="products.headerClass('title')"
+    tbody
+      tr.action ui-sref="^.product({product_id: p.id})" ng-repeat="p in products.data.display"  ng-class="{'uk-text-muted': !p.enabled}"
+        td.uk-text
+          i.uk-icon-lock ng-hide="p.enabled"
+        td.uk-text-right
+          | {{ p.id | number }}
+        td
+          | {{ p.number }}
+        td
+          | {{ p.title }}

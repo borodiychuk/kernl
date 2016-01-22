@@ -14,9 +14,13 @@ class ApplicationController < ActionController::Base
 
   protected
 
+  def authenticate!
+    raise AuthorizationException unless @user
+  end
+
   def assign_account
+    @user    = current_user if user_signed_in?
     @account = user_signed_in? ? current_user.account : Account.find_by_id(params[:account_id])
-    @user = current_user if user_signed_in?
   end
 
   # This method is called in case we just need to respond smth as OK

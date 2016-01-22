@@ -25,7 +25,7 @@ angular.module("app.services", [])
 ##  Checks version of the application and reload s assets on version mismatch
 ##
 
-.factory("XHREventsInterceptor", ["$rootScope", "$q", "UI", "$document", "$filter", ($rootScope, $q, UI, $document, $filter) ->
+.factory("XHREventsInterceptor", ["$rootScope", "$q", "UI", "$document", ($rootScope, $q, UI, $document) ->
   isSilent = (request, action) ->
     return true if request.config.url.match(/^\/api\/auth\b/)
     return true if request.config.params?._silent? || request.config.data?._silent?
@@ -41,15 +41,15 @@ angular.module("app.services", [])
     unless isSilent(request, "success")
       switch request.config.method
         when "PUT"
-          UI.notify "success", $filter("translate")("actions.updated")
+          UI.notify "success", "Erfolgreich gespeichert"
         when "POST"
-          UI.notify "success", $filter("translate")("actions.saved")
+          UI.notify "success", "Erfolgreich gespeichert"
         when "DELETE"
-          UI.notify "success", $filter("translate")("actions.deleted")
+          UI.notify "success", "Erfolgreich gelöscht"
     # Process reload on version mismatch
     version = request.headers "X-Version"
     if version? && version isnt "<%= Settings.version %>"
-      UI.notify "warning", $filter("translate")("misc.force_reload_warning")
+      UI.notify "warning", "Die Anwendung wurde aktualisiert. Die Seite wird neugeladen."
       $document[0].location.reload()
     # Return value
     request || $q.when request
@@ -62,9 +62,9 @@ angular.module("app.services", [])
           angular.noop()
         when 401,403
           $rootScope.$broadcast "auth:lost"
-          UI.notify "danger", $filter("translate")("auth.missing")
+          UI.notify "danger", "Anmeldung fehlt"
         when 404
-          UI.notify "danger", $filter("translate")("errors.not_found")
+          UI.notify "danger", "Nicht gefunden!"
         when 400
           UI.notify("warning", e) for e in request.data.errors
         when 500
@@ -196,7 +196,7 @@ angular.module("app.services", [])
     for key of input
       continue unless input.hasOwnProperty(key)
       value = input[key]
-      if typeof value is "string" && ((match = value.match(/^[\d\.]+$/)) && key.match(/^(price_|provision_)/))
+      if typeof value is "string" && ((match = value.match(/^[\d\.]+$/)) && key.match(/^price$/))
         input[key] = parseFloat match[0]
       else if typeof value is "object"
         convertPricesToDecimal(value)
@@ -214,7 +214,7 @@ angular.module("app.services", [])
 ##  UI: Notify (info, success, warning, danger)
 ##
 
-.factory("UI", ["$rootScope", "$filter", ($rootScope, $filter) ->
+.factory("UI", ["$rootScope", ($rootScope) ->
 
   jQuery("html").on
     "show.uk.modal": -> $rootScope.$broadcast "modal:open"
@@ -223,16 +223,16 @@ angular.module("app.services", [])
   notify: (status = "info", message = null) ->
     switch status
       when "info"
-        message = $filter("translate")("default_notifications.info")    unless message
+        message = "No info provided, but smth has happened, which is not dangerous" unless message
         timeout = 1000
       when "success"
-        message = $filter("translate")("default_notifications.success") unless message
+        message = "All right" unless message
         timeout = 1000
       when "warning"
-        message = $filter("translate")("default_notifications.warning") unless message
+        message = "No info provided, but smth has happened, which can be dangerous" unless message
         timeout = 20000
       when "danger"
-        message = $filter("translate")("default_notifications.danger")  unless message
+        message = "Error" unless message
         timeout = 30000
     jQuery.UIkit.notify
       message : message
@@ -241,7 +241,7 @@ angular.module("app.services", [])
       pos     : "bottom-right"
 
   confirm: (callback, message = "Are you sure?") ->
-    UIkit.modal.confirm $filter("translate")("misc.confirmation"), callback
+    UIkit.modal.confirm "Sind Sie sicher?", callback
 
   alert: (message) ->
     UIkit.modal.alert message
@@ -271,7 +271,7 @@ angular.module("app.services", [])
 ##  Warn user if he leaves page on some conrition
 ##
 
-.factory("StateChangeWarner", ["$parse", "$filter", (parse, $filter) ->
+.factory("StateChangeWarner", ["$parse", (parse) ->
 
   ##
   ##  Allowed options:
@@ -284,7 +284,7 @@ angular.module("app.services", [])
       # Omit checking if state is listed in excepted
       return if options.except? and next.name in options.except
       if conditioinChecker($scope)
-        unless confirm $filter("translate")("misc.unsaved_data_warning")
+        unless confirm "Sind Sie sicher, dass Sie die Aktion fortsetzen wollen und alle ungespeicherten Daten damit verloren gehen?"
           event.preventDefault();
 
 ])

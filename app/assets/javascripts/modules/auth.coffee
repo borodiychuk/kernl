@@ -32,13 +32,12 @@ angular.module("app.auth", [
 ])
 
 .run([
-  "$rootScope", "$auth", "$document", "UI", "APIProfile", "$filter", "$log", "ipCookie"
-  ($rootScope,   $auth,   $document,   UI,   APIProfile,   $filter,   $log,   ipCookie) ->
+  "$rootScope", "$auth", "$document", "UI", "APIProfile", "$log", "ipCookie"
+  ($rootScope,   $auth,   $document,   UI,   APIProfile,   $log,   ipCookie) ->
 
     loginRedirecter = (event, user) ->
       $log.debug "* Authentication event #{event.name}"
-      # Redirect admin and manager
-      if !$document[0].location.pathname.match(/^\/app\b/)
+      unless $document[0].location.pathname.match(/^\/app\b/)
         # We need that to receive headers
         APIProfile.get().$promise.then ->
           $document[0].location.href = "/app"
@@ -46,7 +45,6 @@ angular.module("app.auth", [
 
     logoutRedirecter = (event) ->
       $log.debug "* Authentication event #{event.name}"
-      # Redirect admin and manager
       if $document[0].location.pathname.match(/^\/app\b/)
         $document[0].location.href = "/reauth"
 
@@ -64,13 +62,13 @@ angular.module("app.auth", [
     $rootScope.$on "auth:invalid",          logoutRedirecter
 
     # Some notifications
-    $rootScope.$on "auth:logout-success", -> UI.notify "success", $filter("translate")("auth.logout_successful")
-    $rootScope.$on "auth:lost",           -> UI.notify "danger",  $filter("translate")("auth.missing")
+    $rootScope.$on "auth:logout-success", -> UI.notify "success", "Erfolgreich abgemeldet!"
+    $rootScope.$on "auth:lost",           -> UI.notify "danger",  "Anmeldung fehlt"
     $rootScope.$on "auth:login-error", (response, data) ->
       if data.errors
         UI.notify "danger", e for e in data.errors
       else
-        UI.notify "danger", $filter("translate")("auth.login_error")
+        UI.notify "danger", "Anmeldung fehlgeschlagen!"
 
 
     # Initial authentication. We try both ways

@@ -13,7 +13,7 @@ class ApiController < ApplicationController
 
   # Rescue from any AuthorizationException by redirecting to frontpage
   rescue_from AuthorizationException do
-    render json: { errors: [I18n.t("errors.generic.unauthorized")] }, status: 403
+    render json: { errors: ["Benutzername und/oder Passwort falsch. Bitte versuchen Sie es erneut oder stellen Sie Ihr Passwort wieder her."] }, status: 403
   end
 
   rescue_from GenericException do |exception|
@@ -22,7 +22,7 @@ class ApiController < ApplicationController
 
   # Not found exception hanling
   rescue_from ActiveRecord::RecordNotFound do |exception|
-    render json: { errors: [I18n.t("errors.generic.not_found")] }, status: 404
+    render json: { errors: ["Nicht gefunden!"] }, status: 404
   end
 
   # Record invalid exception hanling
@@ -32,7 +32,7 @@ class ApiController < ApplicationController
 
   # Special error handler for API for roure not found error
   def route_not_found
-    render json: { errors: [I18n.t("errors.generic.not_found")] }, status: 404
+    render json: { errors: ["Nicht gefunden!"] }, status: 404
   end
 
   protected

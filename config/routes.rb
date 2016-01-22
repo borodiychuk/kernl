@@ -11,6 +11,14 @@ Rails.application.routes.draw do
       namespace :private do
         resource :profile
         resources :projects
+        resources :products do
+          resources :product_prices
+          resources :images do
+            collection do
+              put :order
+            end
+          end
+        end
       end
     end
   end

@@ -186,8 +186,6 @@ GEM
       rails-assets-angular (= 1.4.8)
     rails-assets-angular-simple-logger (0.0.4)
       rails-assets-angular (>= 1.2, < 2)
-    rails-assets-angular-translate (2.8.1)
-      rails-assets-angular (>= 1.2.26, <= 1.5)
     rails-assets-angular-ui--ui-sortable (0.13.4)
       rails-assets-angular (>= 1.2)
       rails-assets-jquery-ui (>= 1.9)
@@ -306,7 +304,6 @@ DEPENDENCIES
   rails-assets-angular-loading-bar!
   rails-assets-angular-resource!
   rails-assets-angular-sanitize!
-  rails-assets-angular-translate!
   rails-assets-angular-ui--ui-sortable!
   rails-assets-datetimepicker!
   rails-assets-ng-file-upload!

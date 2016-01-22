@@ -3,6 +3,7 @@
 #= require lodash
 #= require uikit/uikit
 #= require uikit/components/notify
+#= require uikit/components/lightbox
 #= require angular
 #= require angular-sanitize
 #= require angular-cookie
@@ -35,7 +36,6 @@ angular.module("app", [
   "ngWig"
   "ngFileUpload"
   "ui.sortable"
-  "app.translation"
 ])
 
 .constant("IDENTIFIER", "application")
@@ -74,9 +74,20 @@ angular.module("app", [
       templateUrl: "<%= asset_path "shared/abstract.html" %>"
 
     $stateProvider.state "projects.project",
+      abstract: true
       url: "/:project_id"
-      templateUrl: "<%= asset_path "application/projects.html" %>"
-      controller:  "ProjectViewCtrl"
+      controller:  "ProjectsViewCtrl"
+      templateUrl: "<%= asset_path "shared/abstract.html" %>"
+
+    $stateProvider.state "projects.project.products",
+      url: "/products"
+      templateUrl: "<%= asset_path "application/products/list.html" %>"
+      controller:  "ProductsListCtrl"
+
+    $stateProvider.state "projects.project.product",
+      url: "/products/:product_id"
+      templateUrl: "<%= asset_path "application/products/edit.html" %>"
+      controller:  "ProductsEditCtrl"
 
 
 
