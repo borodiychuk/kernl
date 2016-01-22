@@ -14,7 +14,7 @@ class Image < ActiveRecord::Base
   end
 
   def file_small_url
-    file.thumb('445x200#').url if file
+    file.thumb('600x600#').url if file
   end
 
   def file_large_url
