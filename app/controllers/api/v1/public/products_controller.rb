@@ -6,7 +6,7 @@ class Api::V1::Public::ProductsController < ApiController
     :include => {
       :images => {
         :only => [],
-        :methods => [:file_url, :file_small_url, :file_large_url]
+        :methods => [:file_url, :file_small_url, :file_large_url, :file_thumbnail_url]
       }
     }
   }
