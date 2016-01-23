@@ -6,7 +6,7 @@ class Api::V1::Public::RequestsController < ApiController
     }
     data[:product]         = @product         if @product
     data[:product_variant] = @product_variant if @product_variant
-    data[:message] => params[:message] unless params[:message].blank?
+    data[:message]         = params[:message] unless params[:message].blank?
     RequestsMailer.inquiry(data).deliver_now
     answer_ok
   end
