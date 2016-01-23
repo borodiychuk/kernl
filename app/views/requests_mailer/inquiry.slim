@@ -1,0 +1,22 @@
+p
+  b> Projekt:
+  = @project.name
+
+- if @product
+  p
+    b> Produkt:
+    = @product.title
+    - unless @product.number.blank?
+      i<
+        | (Nr. #{@product.number})
+
+- if @product_variant
+  p
+    b> Variant:
+    = @product_variant.name
+
+- if @message
+  p
+    b Nachricht:
+    br
+    = simple_format @message
