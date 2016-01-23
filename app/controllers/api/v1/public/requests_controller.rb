@@ -15,8 +15,8 @@ class Api::V1::Public::RequestsController < ApiController
 
   def after_initialize
     @project = Project.find(params[:project_id])
-    @product = @project.products.published.find(params[:id]) if params[:id]
-    @product_variant = @product.product_variants.find(params[:product_variant_id]) if params[:product_variant_id]
+    @product = @project.products.published.find(params[:product_id]) if params[:product_id]
+    @product_variant = @product.product_variants.find(params[:product_variant_id]) if @product && params[:product_variant_id]
   end
 
 end
