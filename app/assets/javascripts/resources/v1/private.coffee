@@ -25,6 +25,12 @@ angular.module("app.resources.v1.private", ["ngResource"])
     delete: {method: "DELETE"}
 ])
 
+.factory("APIProductVariants",  ["$resource", ($resource) ->
+  $resource "/api/v1/private/products/:product_id/product_variants/:id/:action.json", {id: "@id", product_id: "@product_id"},
+    update: {method: "PUT"}
+    delete: {method: "DELETE"}
+])
+
 
 ##
 ##  Projects

@@ -13,6 +13,7 @@ Rails.application.routes.draw do
         resources :projects
         resources :products do
           resources :product_prices
+          resources :product_variants
           resources :images do
             collection do
               put :order

@@ -4,6 +4,9 @@ class Api::V1::Public::ProductsController < ApiController
     :only => [:id, :number, :title, :subtitle, :description],
     :methods => [:prices],
     :include => {
+      :product_variants => {
+        :only => [:id, :name, :value]
+      },
       :images => {
         :only => [],
         :methods => [:file_url, :file_small_url, :file_large_url, :file_thumbnail_url]
@@ -12,7 +15,7 @@ class Api::V1::Public::ProductsController < ApiController
   }
 
   def index
-    render :json => @storage.includes(:images, :product_prices).to_json(SERIALIZATION_OPTIONS)
+    render :json => @storage.includes(:images, :product_prices, :product_variants).to_json(SERIALIZATION_OPTIONS)
   end
 
   def show

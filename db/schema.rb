@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160122013807) do
+ActiveRecord::Schema.define(version: 20160123205058) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,18 @@ ActiveRecord::Schema.define(version: 20160122013807) do
   add_index "product_prices", ["price"], name: "index_product_prices_on_price", using: :btree
   add_index "product_prices", ["product_id", "amount"], name: "index_product_prices_on_product_id_and_amount", unique: true, using: :btree
   add_index "product_prices", ["product_id"], name: "index_product_prices_on_product_id", using: :btree
+
+  create_table "product_variants", force: :cascade do |t|
+    t.string   "name"
+    t.string   "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "product_id", null: false
+  end
+
+  add_index "product_variants", ["name"], name: "index_product_variants_on_name", using: :btree
+  add_index "product_variants", ["product_id", "name"], name: "index_product_variants_on_product_id_and_name", unique: true, using: :btree
+  add_index "product_variants", ["product_id"], name: "index_product_variants_on_product_id", using: :btree
 
   create_table "products", force: :cascade do |t|
     t.boolean  "enabled",     default: false, null: false
@@ -91,6 +103,7 @@ ActiveRecord::Schema.define(version: 20160122013807) do
 
   add_foreign_key "images", "products", on_update: :cascade, on_delete: :cascade
   add_foreign_key "product_prices", "products", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "product_variants", "products", on_update: :cascade, on_delete: :cascade
   add_foreign_key "products", "projects", on_update: :cascade, on_delete: :cascade
   add_foreign_key "projects", "accounts", on_update: :cascade, on_delete: :cascade
   add_foreign_key "users", "accounts", on_update: :cascade, on_delete: :cascade
