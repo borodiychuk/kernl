@@ -1,22 +1,47 @@
 p
   b> Projekt:
-  = @project.name
+  = @data[:project].name
 
-- if @product
+- if @data[:product]
   p
     b> Produkt:
-    = @product.title
-    - unless @product.number.blank?
+    = @data[:product].title
+    - unless @data[:product].number.blank?
       i<
-        | (Nr. #{@product.number})
+        | (Nr. #{@data[:product].number})
 
-- if @product_variant
+- if @data[:product_variant]
   p
     b> Variant:
-    = @product_variant.name
+    = @data[:product_variant].name
 
-- if @message
+- if @data[:amount]
+  p
+    b> Menge:
+    = @data[:amount]
+
+- if @data[:name]
+  p
+    b> Name:
+    = @data[:name]
+
+- if @data[:company]
+  p
+    b> Firma:
+    = @data[:company]
+
+- if @data[:phone]
+  p
+    b> Telefon:
+    = @data[:phone]
+
+- if @data[:email]
+  p
+    b> Email:
+    = @data[:email]
+
+- if @data[:message]
   p
     b Nachricht:
     br
-    = simple_format @message
+    = simple_format @data[:message]

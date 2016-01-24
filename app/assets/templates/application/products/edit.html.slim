@@ -8,7 +8,11 @@ article.uk-article
         span.uk-text-muted<> ›
         span ng-show="new" Neu erstellen
         span ng-hide="new"
-          | {{ ::product.id | number }}
+          span ng-hide="product.title"
+            i.uk-icon-hashtag.uk-text-muted
+            | {{ product.id | number }}
+          span ng-show="product.title"
+            | {{ product.title }}
     .uk-width-1-3.uk-text-right
       button.uk-button.uk-button-primary.uk-button-large< ng-disabled="productForm.$invalid" ng-click="save()" ng-show="productForm.$dirty"
         i.uk-icon.uk-icon-check>
