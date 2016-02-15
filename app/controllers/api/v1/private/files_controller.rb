@@ -2,7 +2,7 @@ class Api::V1::Private::FilesController < Api::V1::PrivateController
 
   def index
     sortable_by = %w( id number title )
-    render :json => @storage
+    render :json => @storage.to_json(:methods => [:file_url, :file_small_url, :file_large_url, :file_thumbnail_url])
   end
 
   def show
