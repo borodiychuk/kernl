@@ -7,10 +7,12 @@ Rails.application.routes.draw do
       namespace :public do
         resources :products
         resources :requests
+        resources :files
       end
       namespace :private do
         resource :profile
         resources :projects
+        resources :files
         resources :products do
           resources :product_prices
           resources :product_variants

@@ -36,3 +36,35 @@ article.uk-article
           | {{ p.number }}
         td
           | {{ p.title }}
+
+article.uk-article.uk-margin-large-top
+  .uk-grid
+    .uk-width-4-5
+      h1.uk-article-title
+        i.uk-icon.uk-icon-file-o.uk-text-muted>
+        | Datein
+    .uk-width-1-5.uk-text-right
+      button.uk-button.uk-button-large ngf-select="uploadFiles($files)" ngf-drop="uploadFiles($files)" ngf-multiple="true"
+        i.uk-icon.uk-icon-upload>
+        | Hochladen
+  p.uk-article-meta Verwalten Sie hier Ihre Datein
+
+  hr.uk-article-divider
+
+  .uk-alert.uk-text-center ng-hide="files.data.total" Keine Produkte hier
+
+  table.uk-table.uk-table-striped.uk-table-condensed.uk-table-hover ng-show="files.data.total"
+    thead
+      tr
+        th.uk-width-1-10.uk-text-right.action ng-click="files.setOrderby('id')"
+          | #
+          i.uk-icon.uk-text-muted< ng-class="files.headerClass('id')"
+        th.uk-width-9-10.action ng-click="files.setOrderby('file_name')"
+          | Name
+          i.uk-icon.uk-text-muted< ng-class="files.headerClass('file_name')"
+    tbody
+      tr.action ui-sref="^.file({file_id: f.id})" ng-repeat="f in files.data.display"
+        td.uk-text-right
+          | {{ f.id | number }}
+        td
+          | {{ f.file_name }}

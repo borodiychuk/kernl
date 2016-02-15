@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160123214913) do
+ActiveRecord::Schema.define(version: 20160215100519) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,17 @@ ActiveRecord::Schema.define(version: 20160123214913) do
     t.datetime "updated_at", null: false
     t.string   "email",      null: false
   end
+
+  create_table "field_files", force: :cascade do |t|
+    t.string   "file_uid",    null: false
+    t.string   "file_name",   null: false
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "project_id",  null: false
+  end
+
+  add_index "field_files", ["project_id"], name: "index_field_files_on_project_id", using: :btree
 
   create_table "images", force: :cascade do |t|
     t.string   "file_uid",               null: false
@@ -102,6 +113,7 @@ ActiveRecord::Schema.define(version: 20160123214913) do
   add_index "users", ["account_id"], name: "index_users_on_account_id", using: :btree
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
 
+  add_foreign_key "field_files", "projects", on_update: :cascade, on_delete: :cascade
   add_foreign_key "images", "products", on_update: :cascade, on_delete: :cascade
   add_foreign_key "product_prices", "products", on_update: :cascade, on_delete: :cascade
   add_foreign_key "product_variants", "products", on_update: :cascade, on_delete: :cascade

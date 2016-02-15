@@ -32,6 +32,13 @@ angular.module("app.resources.v1.private", ["ngResource"])
 ])
 
 
+.factory("APIFiles",  ["$resource", ($resource) ->
+  $resource "/api/v1/private/files/:id/:action.json", {id: "@id", project_id: "@project_id"},
+    update: {method: "PUT"}
+    delete: {method: "DELETE"}
+])
+
+
 ##
 ##  Projects
 ##
