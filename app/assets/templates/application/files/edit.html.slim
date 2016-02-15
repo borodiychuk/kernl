@@ -1,0 +1,45 @@
+article.uk-article
+  .uk-grid
+    .uk-width-2-3
+      h1.uk-article-title
+        a ui-sref="^.products"
+          i.uk-icon.uk-icon-file-o.uk-text-muted>
+          | Datein
+        span.uk-text-muted<> ›
+        span ng-show="new" Neu erstellen
+        span ng-hide="new"
+          span ng-hide="file.title"
+            i.uk-icon-hashtag.uk-text-muted
+            | {{ file.id | number }}
+          span ng-show="file.title"
+            | {{ file.title }}
+    .uk-width-1-3.uk-text-right
+      button.uk-button.uk-button-primary.uk-button-large< ng-disabled="fileForm.$invalid" ng-click="save()" ng-show="fileForm.$dirty"
+        i.uk-icon.uk-icon-check>
+        | Anwenden
+  p.uk-article-meta Verwalten Sie hier Ihre Produktdaten
+
+  hr.uk-article-divider
+
+  .uk-grid
+    .uk-width-6-10
+      form.uk-form.uk-form-horizontal name="fileForm"
+        fieldset.uk-margin-large-bottom
+          .uk-form-row
+            label.uk-form-label Beschreibung
+            .uk-form-controls
+              input.uk-width-1-1 type="text" ng-model="file.description" placeholder=""
+
+
+  .uk-margin-large-top
+    hr.uk-article-divider
+    button.uk-button.uk-button-danger.uk-float-left.uk-margin-right ng-click="delete()" ng-hide="new"
+      i.uk-icon.uk-icon-trash>
+      | Löschen
+    button.uk-button.uk-button.uk-float-left.uk-margin-right ng-click="reset()" ng-hide="new || fileForm.$pristine"
+      i.uk-icon.uk-icon-times>
+      | Abbrechen
+    button.uk-button.uk-button-primary.uk-float-right.uk-margin-left ng-disabled="fileForm.$invalid" ng-click="save()" ng-show="fileForm.$dirty"
+      i.uk-icon.uk-icon-check>
+      | Anwenden
+
