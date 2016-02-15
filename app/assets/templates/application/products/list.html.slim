@@ -56,15 +56,22 @@ article.uk-article.uk-margin-large-top
   table.uk-table.uk-table-striped.uk-table-condensed.uk-table-hover ng-show="files.data.total"
     thead
       tr
-        th.uk-width-1-10.uk-text-right.action ng-click="files.setOrderby('id')"
+        th.uk-width-1-10.uk-text-right.action ng-click="files.setOrderby('id')" colspan="2"
           | #
           i.uk-icon.uk-text-muted< ng-class="files.headerClass('id')"
-        th.uk-width-9-10.action ng-click="files.setOrderby('file_name')"
+        th.uk-width-4-10.action ng-click="files.setOrderby('file_name')"
           | Name
           i.uk-icon.uk-text-muted< ng-class="files.headerClass('file_name')"
+        th.uk-width-5-10
+          | Beschreibung
     tbody
-      tr.action ui-sref="^.file({file_id: f.id})" ng-repeat="f in files.data.display"
-        td.uk-text-right
+      tr.action ng-repeat="f in files.data.display"
+        td.uk-text
+          a ng-href="{{ f.file_url }}" target="_blank"
+            i.uk-icon-chain
+        td.uk-text-right ui-sref="^.file({file_id: f.id})"
           | {{ f.id | number }}
-        td
+        td ui-sref="^.file({file_id: f.id})"
           | {{ f.file_name }}
+        td ui-sref="^.file({file_id: f.id})"
+          | {{ f.description }}

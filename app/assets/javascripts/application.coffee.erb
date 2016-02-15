@@ -95,6 +95,11 @@ angular.module("app", [
       templateUrl: "<%= asset_path "application/products/edit.html" %>"
       controller:  "ProductsEditCtrl"
 
+    $stateProvider.state "projects.project.file",
+      url: "/files/:file_id"
+      templateUrl: "<%= asset_path "application/files/edit.html" %>"
+      controller:  "FilesEditCtrl"
+
 
 
     ##
