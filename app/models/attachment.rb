@@ -8,19 +8,29 @@ class Attachment < ActiveRecord::Base
   scope :unassigned, ->() { where(:object_id => nil) }
 
   def file_url
-    file.remote_url if file
+    thumbnailable? ? file.remote_url : placeholder_thumbnail
   end
 
   def file_small_url
-    file.thumb('600x600>').url if file
+    thumbnailable? ? file.thumb('600x600>').url : placeholder_thumbnail
   end
 
   def file_large_url
-    file.thumb('980x').url if file
+    thumbnailable? ? file.thumb('980x').url : placeholder_thumbnail
   end
 
   def file_thumbnail_url
-    file.thumb('100x100#').url if file
+    thumbnailable? ? file.thumb('100x100#').url : placeholder_thumbnail
+  end
+
+  private
+
+  def thumbnailable?
+    file && %w(jpg jpeg png gif).include?(file.format)
+  end
+
+  def placeholder_thumbnail
+    ActionController::Base.helpers.asset_path "placeholder.png"
   end
 
 end
