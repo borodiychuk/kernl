@@ -23,8 +23,8 @@ angular.module("app", [
   "ngSanitize"
   "angular-loading-bar"
   "app.controllers"
-  "app.resources.v1"
-  "app.resources.v1.private"
+  "app.resources.v2"
+  "app.resources.v2.private"
   "app.services"
   "app.directives"
   "app.filters"
@@ -74,31 +74,26 @@ angular.module("app", [
       templateUrl: "<%= asset_path "application/landing.html" %>"
 
 
-    $stateProvider.state "projects",
+    $stateProvider.state "storages",
       abstract: true
-      url: "/projects"
+      url: "/storages"
       templateUrl: "<%= asset_path "shared/abstract.html" %>"
 
-    $stateProvider.state "projects.project",
+    $stateProvider.state "storages.storage",
       abstract: true
-      url: "/:project_id"
-      controller:  "ProjectsViewCtrl"
+      url: "/:storage_id"
+      controller:  "StoragesViewCtrl"
       templateUrl: "<%= asset_path "shared/abstract.html" %>"
 
-    $stateProvider.state "projects.project.products",
-      url: "/products"
-      templateUrl: "<%= asset_path "application/products/list.html" %>"
-      controller:  "ProductsListCtrl"
+    $stateProvider.state "storages.storage.entries",
+      url: "/entries"
+      templateUrl: "<%= asset_path "application/entries/list.html" %>"
+      controller:  "EntriesListCtrl"
 
-    $stateProvider.state "projects.project.product",
-      url: "/products/:product_id"
-      templateUrl: "<%= asset_path "application/products/edit.html" %>"
-      controller:  "ProductsEditCtrl"
-
-    $stateProvider.state "projects.project.file",
-      url: "/files/:file_id"
-      templateUrl: "<%= asset_path "application/files/edit.html" %>"
-      controller:  "FilesEditCtrl"
+    $stateProvider.state "storages.storage.entry",
+      url: "/entries/:entry_id"
+      templateUrl: "<%= asset_path "application/entries/edit.html" %>"
+      controller:  "EntriesEditCtrl"
 
 
 

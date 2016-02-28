@@ -11,86 +11,59 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160215100519) do
+ActiveRecord::Schema.define(version: 20160224230608) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name",       null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.string   "email",      null: false
-  end
-
-  create_table "field_files", force: :cascade do |t|
-    t.string   "file_uid",    null: false
-    t.string   "file_name",   null: false
-    t.text     "description"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.integer  "project_id",  null: false
-  end
-
-  add_index "field_files", ["project_id"], name: "index_field_files_on_project_id", using: :btree
-
-  create_table "images", force: :cascade do |t|
-    t.string   "file_uid",               null: false
-    t.string   "file_name",              null: false
-    t.integer  "ordering",   default: 0, null: false
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-    t.integer  "product_id",             null: false
-  end
-
-  add_index "images", ["product_id"], name: "index_images_on_product_id", using: :btree
-
-  create_table "product_prices", force: :cascade do |t|
-    t.integer  "amount"
-    t.decimal  "price",      precision: 8, scale: 2
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
-    t.integer  "product_id",                         null: false
-  end
-
-  add_index "product_prices", ["price"], name: "index_product_prices_on_price", using: :btree
-  add_index "product_prices", ["product_id", "amount"], name: "index_product_prices_on_product_id_and_amount", unique: true, using: :btree
-  add_index "product_prices", ["product_id"], name: "index_product_prices_on_product_id", using: :btree
-
-  create_table "product_variants", force: :cascade do |t|
-    t.string   "name"
-    t.string   "value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer  "product_id", null: false
   end
 
-  add_index "product_variants", ["name"], name: "index_product_variants_on_name", using: :btree
-  add_index "product_variants", ["product_id", "name"], name: "index_product_variants_on_product_id_and_name", unique: true, using: :btree
-  add_index "product_variants", ["product_id"], name: "index_product_variants_on_product_id", using: :btree
-
-  create_table "products", force: :cascade do |t|
-    t.boolean  "enabled",     default: false, null: false
-    t.string   "title",       default: "",    null: false
-    t.string   "subtitle",    default: "",    null: false
-    t.string   "number",      default: "",    null: false
-    t.text     "description"
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
-    t.integer  "project_id",                  null: false
+  create_table "attachments", force: :cascade do |t|
+    t.string   "file_uid"
+    t.string   "file_name"
+    t.integer  "ordering"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "value_id",   null: false
   end
 
-  add_index "products", ["enabled"], name: "index_products_on_enabled", using: :btree
-  add_index "products", ["project_id"], name: "index_products_on_project_id", using: :btree
+  add_index "attachments", ["value_id"], name: "index_attachments_on_value_id", using: :btree
 
-  create_table "projects", force: :cascade do |t|
+  create_table "entries", force: :cascade do |t|
+    t.boolean  "enabled",    default: false, null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.integer  "storage_id",                 null: false
+  end
+
+  add_index "entries", ["storage_id"], name: "index_entries_on_storage_id", using: :btree
+
+  create_table "fields", force: :cascade do |t|
+    t.string   "identifier", null: false
+    t.string   "name",       null: false
+    t.string   "type",       null: false
+    t.integer  "ordering"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "storage_id", null: false
+  end
+
+  add_index "fields", ["storage_id", "identifier"], name: "index_fields_on_storage_id_and_identifier", unique: true, using: :btree
+  add_index "fields", ["storage_id"], name: "index_fields_on_storage_id", using: :btree
+
+  create_table "storages", force: :cascade do |t|
     t.string   "name",       null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "account_id", null: false
   end
 
-  add_index "projects", ["account_id"], name: "index_projects_on_account_id", using: :btree
+  add_index "storages", ["account_id"], name: "index_storages_on_account_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "name",                default: "",      null: false
@@ -113,11 +86,23 @@ ActiveRecord::Schema.define(version: 20160215100519) do
   add_index "users", ["account_id"], name: "index_users_on_account_id", using: :btree
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
 
-  add_foreign_key "field_files", "projects", on_update: :cascade, on_delete: :cascade
-  add_foreign_key "images", "products", on_update: :cascade, on_delete: :cascade
-  add_foreign_key "product_prices", "products", on_update: :cascade, on_delete: :cascade
-  add_foreign_key "product_variants", "products", on_update: :cascade, on_delete: :cascade
-  add_foreign_key "products", "projects", on_update: :cascade, on_delete: :cascade
-  add_foreign_key "projects", "accounts", on_update: :cascade, on_delete: :cascade
+  create_table "values", force: :cascade do |t|
+    t.json     "data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "entry_id"
+    t.integer  "field_id",   null: false
+  end
+
+  add_index "values", ["entry_id", "field_id"], name: "index_values_on_entry_id_and_field_id", unique: true, using: :btree
+  add_index "values", ["entry_id"], name: "index_values_on_entry_id", using: :btree
+  add_index "values", ["field_id"], name: "index_values_on_field_id", using: :btree
+
+  add_foreign_key "attachments", "\"values\"", column: "value_id", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "entries", "storages", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "fields", "storages", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "storages", "accounts", on_update: :cascade, on_delete: :cascade
   add_foreign_key "users", "accounts", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "values", "entries", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "values", "fields", on_update: :cascade, on_delete: :cascade
 end

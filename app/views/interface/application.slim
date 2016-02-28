@@ -6,14 +6,14 @@ body
         span.uk-navbar-brand
           i.uk-icon.uk-icon-diamond.uk-text-danger>
           b kernl
-        ul.uk-navbar-nav ng-controller="ProjectsListCtrl" ng-show="$root.user.id"
+        ul.uk-navbar-nav ng-controller="StoragesListCtrl" ng-show="$root.user.id"
           li ui-sref-active-if="landing"
             a ui-sref="landing"
               | Startseite
-          li ng-repeat="p in projects.data.display" ng-class="{'uk-active': state.params.project_id == p.id}"
-            a ui-sref="projects.project.products({project_id: p.id})"
-              i.uk-icon.uk-icon-folder-open> ng-show="p.enabled"
-              | {{ p.name }}
+          li ng-repeat="s in storages.data.display" ng-class="{'uk-active': state.params.storage_id == s.id}"
+            a ui-sref="storages.storage.entries({storage_id: s.id})"
+              i.uk-icon.uk-icon-folder-open> ng-show="s.enabled"
+              | {{ s.name }}
         .uk-navbar-flip
           ul.uk-navbar-nav
             li ui-sref-active-if="profile" ng-show="$root.user.id"

@@ -24,6 +24,22 @@ Rails.application.routes.draw do
         end
       end
     end
+    namespace :v2 do
+      namespace :public do
+        resources :entries
+      end
+      namespace :private do
+        resource :profile
+        resources :storages
+        resources :entries
+        resources :values
+        resources :attachments do
+          collection do
+            put :order
+          end
+        end
+      end
+    end
   end
 
   get  "app"    => "interface#application"

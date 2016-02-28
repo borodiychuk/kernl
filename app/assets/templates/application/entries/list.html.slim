@@ -1,0 +1,38 @@
+article.uk-article
+  .uk-grid
+    .uk-width-4-5
+      h1.uk-article-title
+        i.uk-icon.uk-icon-tags.uk-text-muted>
+        | {{ storage.name }}
+    .uk-width-1-5.uk-text-right
+      a.uk-button.uk-button-large ui-sref="^.entry({entry_id: 'new'})"
+        i.uk-icon.uk-icon-plus>
+        | Erstellen
+  p.uk-article-meta Verwalten Sie hier Ihre Daten
+
+  hr.uk-article-divider
+
+  .uk-alert.uk-text-center ng-hide="entries.data.total" Keine Produkte hier
+
+  table.uk-table.uk-table-striped.uk-table-condensed.uk-table-hover ng-show="entries.data.total"
+    thead
+      tr
+        th.uk-width-1-10.uk-text-right.action ng-click="entries.setOrderby('id')" colspan="2"
+          | #
+          i.uk-icon.uk-text-muted< ng-class="entries.headerClass('id')"
+        th.uk-width-2-10.action ng-click="entries.setOrderby('number')"
+          | Nummer
+          i.uk-icon.uk-text-muted< ng-class="entries.headerClass('number')"
+        th.uk-width-7-10.action ng-click="entries.setOrderby('title')"
+          | Titel
+          i.uk-icon.uk-text-muted< ng-class="entries.headerClass('title')"
+    tbody
+      tr.action ui-sref="^.entry({entry_id: e.id})" ng-repeat="e in entries.data.display"  ng-class="{'uk-text-muted': !e.enabled}"
+        td.uk-text
+          i.uk-icon-lock ng-hide="e.enabled"
+        td.uk-text-right
+          | {{ e.id | number }}
+        td
+          | {{ e.number }}
+        td
+          | {{ e.title }}
