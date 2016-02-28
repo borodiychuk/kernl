@@ -26,7 +26,7 @@ class Attachment < ActiveRecord::Base
   private
 
   def thumbnailable?
-    file && %w(jpg jpeg png gif).include?(file.format)
+    file && %w(.jpg .jpeg .png .gif).include?(File.extname(file.name).downcase)
   end
 
   def placeholder_thumbnail
