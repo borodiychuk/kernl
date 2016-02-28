@@ -19,7 +19,7 @@ class Entry < ActiveRecord::Base
     result = attributes
     storage.fields.each do |f|
       v = values.of_field(f).first
-      result[f.identifier] = v.exposed_value
+      result[f.identifier] = v.exposed_value if v
     end
     result
   end
