@@ -3,6 +3,8 @@ class Field < ActiveRecord::Base
   belongs_to :storage
   has_many   :values, :dependent => :destroy
 
+  scope :backend_list_listed, ->() { where(:shown_in_backend_list => true) }
+
   def content_type
     type.underscore.split("/").last.to_sym
   end

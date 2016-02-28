@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160224230608) do
+ActiveRecord::Schema.define(version: 20160228141626) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,13 +44,14 @@ ActiveRecord::Schema.define(version: 20160224230608) do
   add_index "entries", ["storage_id"], name: "index_entries_on_storage_id", using: :btree
 
   create_table "fields", force: :cascade do |t|
-    t.string   "identifier", null: false
-    t.string   "name",       null: false
-    t.string   "type",       null: false
+    t.string   "identifier",                            null: false
+    t.string   "name",                                  null: false
+    t.string   "type",                                  null: false
     t.integer  "ordering"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer  "storage_id", null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+    t.integer  "storage_id",                            null: false
+    t.boolean  "shown_in_backend_list", default: false, null: false
   end
 
   add_index "fields", ["storage_id", "identifier"], name: "index_fields_on_storage_id_and_identifier", unique: true, using: :btree
