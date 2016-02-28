@@ -25,72 +25,73 @@ article.uk-article
     .uk-width-6-10
       form.uk-form.uk-form-horizontal name="entryForm"
 
-          .uk-hidden ng-repeat-start="f in storage.fields" ng-if=""
+        .uk-form-row
+          .uk-form-controls
+            label
+              input> type="checkbox" ng-model="entry.enabled"
+              | Published
 
-          / Booleans as checkbox
-          .uk-form-row ng-if="f.content_type == 'boolean'"
-            .uk-form-controls
-              label
-                input.uk-width-1-1> type="checkbox" ng-model="entry[f.identifier]"
+        .uk-hidden ng-repeat-start="f in storage.fields" ng-if=""
+
+        / Booleans as checkbox
+        .uk-form-row ng-if="f.content_type == 'boolean'"
+          .uk-form-controls
+            label
+              input.uk-width-1-1> type="checkbox" ng-model="entry[f.identifier]"
+              | {{ f.name }}
+
+        / Strings as text input
+        .uk-form-row ng-if="f.content_type == 'string'"
+          label.uk-form-label
+            | {{ f.name }}
+          .uk-form-controls
+            input.uk-width-1-1 type="text" ng-model="entry[f.identifier]" placeholder=""
+
+        / Text as textarea
+        .uk-form-row ng-if="f.content_type == 'text'"
+          label.uk-form-label
+            | {{ f.name }}
+          .uk-form-controls
+            textarea.uk-width-1-1 type="text" ng-model="entry[f.identifier]" placeholder="" rows="5"
+
+        / Text as HTML
+        .uk-form-row ng-if="f.content_type == 'html'"
+          label.uk-form-label
+            | {{ f.name }}
+          .uk-form-controls
+            textarea ng-wig="entry[f.identifier]"
+
+        / A single file or a reference to url
+        .uk-form-row ng-if="f.content_type == 'file'"
+          label.uk-form-label
+            | {{ f.name }}
+          .uk-form-controls ng-controller="AttachmentsCtrl" ng-init="init(f.identifier)"
+            .uk-placeholder.uk-text-center ngf-select="uploadFiles($files)" ngf-drop="uploadFiles($files)" ngf-multiple="true"  ng-disabled="progress.status != 'ready'" ng-class="{action: progress.status == 'ready'}" ngf-drag-over-class="{accept: 'uk-text-success', reject: 'uk-text-danger'}" ng-show="progress.status == 'ready'"
+              i.uk-icon.uk-icon-image>
+              | Entweder in das Feld klicken oder Datein hier ziehen
+
+            .uk-grid ng-repeat-start="f in progress.files" ng-hide="progress.status == 'ready'"
+              .uk-width-1-1
+                .uk-progress.uk-progress-mini.uk-progress-striped ng-class="{'uk-active': f.status == 'loading', 'uk-progress-danger': f.status == 'error', 'uk-progress-success': f.status == 'success'}"
+                  .uk-progress-bar ng-style="{width: f.progress + '%'}"
+            .uk-grid.uk-text-small.uk-margin-bottom.uk-margin-small-top ng-repeat-end=""
+              .uk-width-1-5.uk-text-muted.uk-text-right
+                | {{ f.size | bytes }}
+              .uk-width-4-5
                 | {{ f.name }}
 
-          / Strings as text input
-          .uk-form-row ng-if="f.content_type == 'string'"
-            label.uk-form-label
-              | {{ f.name }}
-            .uk-form-controls
-              input.uk-width-1-1 type="text" ng-model="entry[f.identifier]" placeholder=""
+            .uk-sortable ui-sortable="sortableOptions" ng-model="files"
+              .uk-thumbnail.uk-margin-small-right.uk-margin-small-bottom.uk-clearfix.uk-visible-hover ng-repeat="f in files" style="position: relative"
+                img ng-src="{{ f.file_thumbnail_url }}"
+                button.uk-button.uk-button-danger.uk-button-mini.uk-position-bottom-left.uk-hidden.uk-margin-small-left.uk-margin-small-bottom ng-click="deleteFile(f)"
+                  i.u-icon.uk-icon-times
+                a.uk-button.uk-button-primary.uk-button-mini.uk-position-bottom-right.uk-hidden.uk-margin-small-right.uk-margin-small-bottom data-uk-lightbox="{group: 'gallery'}" ng-href="{{ f.file_url }}"
+                  i.u-icon.uk-icon-eye
 
-          / Text as textarea
-          .uk-form-row ng-if="f.content_type == 'text'"
-            label.uk-form-label
-              | {{ f.name }}
-            .uk-form-controls
-              textarea.uk-width-1-1 type="text" ng-model="entry[f.identifier]" placeholder="" rows="5"
-
-          / Text as HTML
-          .uk-form-row ng-if="f.content_type == 'html'"
-            label.uk-form-label
-              | {{ f.name }}
-            .uk-form-controls
-              textarea ng-wig="entry[f.identifier]"
-
-          / A single file or a reference to url
-          .uk-form-row ng-if="f.content_type == 'file'"
-            label.uk-form-label
-              | {{ f.name }}
-            .uk-form-controls ng-controller="AttachmentsCtrl" ng-init="init(f.identifier)"
-              .uk-placeholder.uk-text-center ngf-select="uploadFiles($files)" ngf-drop="uploadFiles($files)" ngf-multiple="true"  ng-disabled="progress.status != 'ready'" ng-class="{action: progress.status == 'ready'}" ngf-drag-over-class="{accept: 'uk-text-success', reject: 'uk-text-danger'}" accept="image/*" ngf-pattern="'image/*'" ng-show="progress.status == 'ready'"
-                i.uk-icon.uk-icon-image>
-                | Entweder in das Feld klicken oder Datein hier ziehen
-
-              .uk-grid ng-repeat-start="f in progress.files" ng-hide="progress.status == 'ready'"
-                .uk-width-1-1
-                  .uk-progress.uk-progress-mini.uk-progress-striped ng-class="{'uk-active': f.status == 'loading', 'uk-progress-danger': f.status == 'error', 'uk-progress-success': f.status == 'success'}"
-                    .uk-progress-bar ng-style="{width: f.progress + '%'}"
-              .uk-grid.uk-text-small.uk-margin-bottom.uk-margin-small-top ng-repeat-end=""
-                .uk-width-1-5.uk-text-muted.uk-text-right
-                  | {{ f.size | bytes }}
-                .uk-width-4-5
-                  | {{ f.name }}
-
-              .uk-sortable ui-sortable="sortableOptions" ng-model="files"
-                .uk-thumbnail.uk-margin-small-right.uk-margin-small-bottom.uk-clearfix.uk-visible-hover ng-repeat="f in files" style="position: relative"
-                  img ng-src="{{ f.file_thumbnail_url }}"
-                  button.uk-button.uk-button-danger.uk-button-mini.uk-position-bottom-left.uk-hidden.uk-margin-small-left.uk-margin-small-bottom ng-click="deleteFile(f)"
-                    i.u-icon.uk-icon-times
-                  a.uk-button.uk-button-primary.uk-button-mini.uk-position-bottom-right.uk-hidden.uk-margin-small-right.uk-margin-small-bottom data-uk-lightbox="{group: 'gallery'}" ng-href="{{ f.file_url }}"
-                    i.u-icon.uk-icon-eye
-
-          .uk-hidden ng-repeat-end="" ng-if=""
+        .uk-hidden ng-repeat-end="" ng-if=""
 
 
     .uk-width-3-10.uk-push-1-10
-      .uk-form-row
-        .uk-form-controls
-          label
-            input> type="checkbox" ng-model="entry.enabled"
-            | Published
 
 
 
