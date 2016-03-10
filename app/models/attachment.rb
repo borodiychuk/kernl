@@ -30,7 +30,7 @@ class Attachment < ActiveRecord::Base
   end
 
   def placeholder_thumbnail
-    ActionController::Base.helpers.asset_path "placeholder.png"
+    ActionController::Base.helpers.asset_url "placeholder.png"
   end
 
 end

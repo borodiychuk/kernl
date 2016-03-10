@@ -39,6 +39,9 @@ module Kernl
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.smtp_settings = Settings.smtp.to_hash
 
+    # Give a full URL to assets for proper cross-domain
+    config.action_controller.asset_host = Settings.url
+
     # To support nice structure of models
     require File.join(Rails.root, "app", "models", "field.rb")
     require File.join(Rails.root, "app", "models", "field", "string.rb")
