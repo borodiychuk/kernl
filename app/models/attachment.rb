@@ -8,7 +8,7 @@ class Attachment < ActiveRecord::Base
   scope :unassigned, ->() { where(:object_id => nil) }
 
   def file_url
-    thumbnailable? ? file.remote_url : placeholder_thumbnail
+    file.remote_url
   end
 
   def file_small_url
