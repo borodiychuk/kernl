@@ -68,7 +68,7 @@ article.uk-article
           .uk-form-controls ng-controller="AttachmentsCtrl" ng-init="init(f.identifier)"
             .uk-placeholder.uk-text-center ngf-select="uploadFiles($files)" ngf-drop="uploadFiles($files)" ngf-multiple="true"  ng-disabled="progress.status != 'ready'" ng-class="{action: progress.status == 'ready'}" ngf-drag-over-class="{accept: 'uk-text-success', reject: 'uk-text-danger'}" ng-show="progress.status == 'ready'"
               i.uk-icon.uk-icon-image>
-              | Entweder in das Feld klicken oder Dateien hier ziehen
+              | Entweder in das Feld klicken oder Dateien hierher ziehen
 
             .uk-grid ng-repeat-start="f in progress.files" ng-hide="progress.status == 'ready'"
               .uk-width-1-1
