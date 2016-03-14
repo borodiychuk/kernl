@@ -1,7 +1,7 @@
 class Api::V2::Private::EntriesController < Api::V2::PrivateController
 
   def index
-    sortable_by = %w( id number title )
+    sortable_by = %w( id created_at updated_at )
     render_paginated @objects.order(sorting sortable_by)
   end
 

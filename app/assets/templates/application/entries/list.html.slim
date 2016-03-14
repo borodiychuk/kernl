@@ -20,6 +20,12 @@ article.uk-article
         th.smallest.uk-text-right.action ng-click="entries.setOrderby('id')" colspan="2"
           | #
           i.uk-icon.uk-text-muted< ng-class="entries.headerClass('id')"
+        th.smallest.uk-text-center.action ng-click="entries.setOrderby('created_at')"
+          | Erstellung
+          i.uk-icon.uk-text-muted< ng-class="entries.headerClass('created_at')"
+        th.smallest.uk-text-center.action ng-click="entries.setOrderby('updated_at')"
+          | Aktualiz.
+          i.uk-icon.uk-text-muted< ng-class="entries.headerClass('updated_at')"
         th ng-repeat="f in storage.backend_list_fields"
           | {{ f.name }}
     tbody
@@ -28,5 +34,9 @@ article.uk-article
           i.uk-icon-lock ng-hide="e.enabled"
         td.uk-text-right
           | {{ e.id | number }}
+        td.uk-text.uk-text-nowrap.uk-text-small style="vertical-align: middle"
+          | {{ e.created_at | date:"H:mm d.M.yyyy" }}
+        td.uk-text.uk-text-nowrap.uk-text-small style="vertical-align: middle"
+          | {{ e.updated_at | date:"H:mm d.M.yyyy" }}
         td ng-repeat="f in storage.backend_list_fields"
           | {{ e[f.identifier] }}
