@@ -27,7 +27,7 @@ class Api::V2::Private::EntriesController < Api::V2::PrivateController
   protected
 
   def filtered_params
-    params.permit(@storage.entry_accessible_attributes)
+    params.permit([:enabled] + @storage.entry_accessible_attributes)
   end
 
   def after_initialize

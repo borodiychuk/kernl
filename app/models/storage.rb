@@ -5,7 +5,7 @@ class Storage < ActiveRecord::Base
   has_many :fields,  :dependent => :destroy
 
   def entry_accessible_attributes
-    [:enabled] + fields.pluck(:identifier).map(&:to_sym)
+    fields.pluck(:identifier).map(&:to_sym)
   end
 
   def backend_list_fields

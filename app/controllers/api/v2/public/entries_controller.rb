@@ -8,10 +8,21 @@ class Api::V2::Public::EntriesController < ApiController
     render :json => @object
   end
 
+  def create
+    raise AuthorizationException unless @storage.public_creating_enabled
+    @object = @objects.create! filtered_params
+    show
+  end
+
   protected
 
+  def filtered_params
+    params.permit(@storage.entry_accessible_attributes)
+  end
+
   def after_initialize
-    @objects = Storage.find(params[:storage_id]).entries.published
+    @storage = Storage.find(params[:storage_id])
+    @objects = @storage.entries.published
     @object  = @objects.find(params[:id]) if params[:id]
   end
 
