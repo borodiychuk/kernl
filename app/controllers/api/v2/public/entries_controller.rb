@@ -14,7 +14,7 @@ class Api::V2::Public::EntriesController < ApiController
     raise AuthorizationException unless @storage.public_creating_enabled
     @object = @objects.create!
     @object.update_attributes! filtered_params
-    show
+    answer_ok
   end
 
   protected
