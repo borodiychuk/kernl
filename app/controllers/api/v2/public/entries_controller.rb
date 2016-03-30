@@ -12,7 +12,8 @@ class Api::V2::Public::EntriesController < ApiController
 
   def create
     raise AuthorizationException unless @storage.public_creating_enabled
-    @object = @objects.create! filtered_params
+    @object = @objects.create!
+    @objects.update_attributes! filtered_params
     show
   end
 
