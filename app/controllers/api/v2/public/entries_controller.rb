@@ -1,10 +1,12 @@
 class Api::V2::Public::EntriesController < ApiController
 
   def index
+    raise AuthorizationException unless @storage.public_viewing_enabled
     render :json => @objects.includes(:fields, :values => :attachments)
   end
 
   def show
+    raise AuthorizationException unless @storage.public_viewing_enabled
     render :json => @object
   end
 
