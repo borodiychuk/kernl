@@ -22,7 +22,7 @@ article.uk-article
   hr.uk-article-divider
 
   .uk-grid
-    .uk-width-6-10
+    .uk-width-7-10
       form.uk-form.uk-form-horizontal name="entryForm"
 
         .uk-form-row
@@ -82,16 +82,18 @@ article.uk-article
 
             .uk-sortable ui-sortable="sortableOptions" ng-model="files"
               .uk-thumbnail.uk-margin-small-right.uk-margin-small-bottom.uk-clearfix.uk-visible-hover ng-repeat="f in files" style="position: relative"
-                img ng-src="{{ f.file_thumbnail_url }}"
+                img ng-src="{{ f.file_thumbnail_url || '#{image_path 'placeholder.png'}' }}"
                 button.uk-button.uk-button-danger.uk-button-mini.uk-position-bottom-left.uk-hidden.uk-margin-small-left.uk-margin-small-bottom ng-click="deleteFile(f)"
-                  i.u-icon.uk-icon-times
-                a.uk-button.uk-button-primary.uk-button-mini.uk-position-bottom-right.uk-hidden.uk-margin-small-right.uk-margin-small-bottom data-uk-lightbox="{group: 'gallery'}" ng-href="{{ f.file_url }}"
-                  i.u-icon.uk-icon-eye
+                  i.uk-icon.uk-icon-times
+                a.uk-button.uk-button-primary.uk-button-mini.uk-position-bottom-right.uk-hidden.uk-margin-small-right.uk-margin-small-bottom data-uk-lightbox="{group: 'gallery'}" ng-href="{{ f.file_url }}" ng-if="f.file_thumbnail_url"
+                  i.uk-icon.uk-icon-eye
+                a.uk-button.uk-button-primary.uk-button-mini.uk-position-bottom-right.uk-hidden.uk-margin-small-right.uk-margin-small-bottom target="_blank" ng-href="{{ f.file_url }}" ng-if="!f.file_thumbnail_url"
+                  i.uk-icon.uk-icon-download
 
         .uk-hidden ng-repeat-end="" ng-if=""
 
 
-    .uk-width-3-10.uk-push-1-10
+    .uk-width-2-10.uk-push-1-10
 
 
 

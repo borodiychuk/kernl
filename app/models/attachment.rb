@@ -16,25 +16,21 @@ class Attachment < ActiveRecord::Base
   end
 
   def file_small_url
-    thumbnailable? ? file.thumb('600x600>').url : placeholder_thumbnail
+    file.thumb('600x600>').url if thumbnailable?
   end
 
   def file_large_url
-    thumbnailable? ? file.thumb('980x').url : placeholder_thumbnail
+    file.thumb('980x').url if thumbnailable?
   end
 
   def file_thumbnail_url
-    thumbnailable? ? file.thumb('100x100#').url : placeholder_thumbnail
+    file.thumb('100x100#').url if thumbnailable?
   end
 
   private
 
   def thumbnailable?
     file && %w(.jpg .jpeg .png .gif).include?(File.extname(file.name).downcase)
-  end
-
-  def placeholder_thumbnail
-    ActionController::Base.helpers.asset_url "placeholder.png"
   end
 
 end
