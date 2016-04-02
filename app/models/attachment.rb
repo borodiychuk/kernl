@@ -7,6 +7,10 @@ class Attachment < ActiveRecord::Base
   default_scope ->() { order("ordering ASC")}
   scope :unassigned, ->() { where(:object_id => nil) }
 
+  after_create do |a|
+    a.update_attribute :ordering, a.id if a.ordering.nil?
+  end
+
   def file_url
     file.remote_url
   end
