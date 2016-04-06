@@ -3,6 +3,8 @@ class Field < ActiveRecord::Base
   belongs_to :storage
   has_many   :values, :dependent => :destroy
 
+  default_scope ->() { order "ordering ASC" }
+
   scope :backend_list_listed, ->() { where(:shown_in_backend_list => true) }
 
   def content_type

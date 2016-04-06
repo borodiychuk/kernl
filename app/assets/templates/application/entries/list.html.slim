@@ -17,13 +17,13 @@ article.uk-article
   table.uk-table.uk-table-striped.uk-table-condensed.uk-table-hover ng-show="entries.data.total"
     thead
       tr
-        th.smallest.uk-text-right.action ng-click="entries.setOrderby('id')" colspan="2"
+        th.smallest.uk-text-nowrap.uk-text-right.action ng-click="entries.setOrderby('id')" colspan="2"
           | #
           i.uk-icon.uk-text-muted< ng-class="entries.headerClass('id')"
-        th.smallest.uk-text-center.action ng-click="entries.setOrderby('created_at')"
+        th.smallest.uk-text-nowrap.uk-text-center.action ng-click="entries.setOrderby('created_at')"
           | Erstellung
           i.uk-icon.uk-text-muted< ng-class="entries.headerClass('created_at')"
-        th.smallest.uk-text-center.action ng-click="entries.setOrderby('updated_at')"
+        th.smallest.uk-text-nowrap.uk-text-center.action ng-click="entries.setOrderby('updated_at')"
           | Aktualiz.
           i.uk-icon.uk-text-muted< ng-class="entries.headerClass('updated_at')"
         th ng-repeat="f in storage.backend_list_fields"

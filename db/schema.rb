@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160330100916) do
+ActiveRecord::Schema.define(version: 20160406230446) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(version: 20160330100916) do
     t.datetime "updated_at",                            null: false
     t.integer  "storage_id",                            null: false
     t.boolean  "shown_in_backend_list", default: false, null: false
+    t.json     "options"
   end
 
   add_index "fields", ["storage_id", "identifier"], name: "index_fields_on_storage_id_and_identifier", unique: true, using: :btree

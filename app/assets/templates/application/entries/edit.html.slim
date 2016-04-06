@@ -61,6 +61,14 @@ article.uk-article
           .uk-form-controls
             textarea ng-wig="entry[f.identifier]"
 
+        / Enum as selector
+        .uk-form-row ng-if="f.content_type == 'enum'"
+          label.uk-form-label
+            | {{ f.name }}
+          .uk-form-controls
+            select ng-model="entry[f.identifier]" ng-options="o.key as o.description for o in f.options.dictionary"
+              option value="" — bitte wählen —
+
         / A single file or a reference to url
         .uk-form-row ng-if="f.content_type == 'file'"
           label.uk-form-label
