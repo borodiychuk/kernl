@@ -17,9 +17,8 @@ class Entry < ActiveRecord::Base
 
   def as_json params
     result = attributes
-    storage.fields.each do |f|
-      v = values.of_field(f).first
-      result[f.identifier] = v.exposed_value if v
+    values.includes(:field).each do |v|
+      result[v.field.identifier] = v.exposed_value
     end
     result
   end
