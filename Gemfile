@@ -14,6 +14,7 @@ gem "puma"
 gem "devise_token_auth"
 gem "sidekiq"
 gem "rack-cors", :require => "rack/cors"
+gem "rack-cache", :require => "rack/cache"
 
 # See https://github.com/rails/execjs#readme for more supported runtimes
 gem "therubyracer", platforms: :ruby
