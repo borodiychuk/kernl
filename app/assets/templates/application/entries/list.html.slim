@@ -40,3 +40,7 @@ article.uk-article
           | {{ e.updated_at | date:"H:mm d.M.yyyy" }}
         td ng-repeat="f in storage.backend_list_fields"
           | {{ e[f.identifier] }}
+
+  div pagination-for="entries"
+
+
