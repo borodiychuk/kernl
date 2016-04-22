@@ -64,4 +64,9 @@ class ApiController < ApplicationController
     "#{field} #{direction}"
   end
 
+  # This method is called in case we just need to respond smth as OK
+  def answer_ok
+    head :no_content
+  end
+
 end

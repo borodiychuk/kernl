@@ -15,7 +15,7 @@ class Entry < ActiveRecord::Base
     end
   end
 
-  def as_json params
+  def as_json params = {}
     result = attributes
     values.includes(:field).each do |v|
       result[v.field.identifier] = v.exposed_value
