@@ -20,7 +20,7 @@ class Api::V2::Private::EntriesController < Api::V2::PrivateController
   end
 
   def create
-    @object = @objects.create!
+    @object = @objects.create! :creator_ip => request.remote_ip
     update
   end
 

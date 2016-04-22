@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160406230446) do
+ActiveRecord::Schema.define(version: 20160422082523) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,10 +35,11 @@ ActiveRecord::Schema.define(version: 20160406230446) do
   add_index "attachments", ["value_id"], name: "index_attachments_on_value_id", using: :btree
 
   create_table "entries", force: :cascade do |t|
-    t.boolean  "enabled",    default: false, null: false
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-    t.integer  "storage_id",                 null: false
+    t.boolean  "enabled",    default: false,     null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.integer  "storage_id",                     null: false
+    t.string   "creator_ip", default: "0.0.0.0"
   end
 
   add_index "entries", ["storage_id"], name: "index_entries_on_storage_id", using: :btree

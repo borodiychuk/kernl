@@ -12,7 +12,7 @@ class Api::V2::Public::EntriesController < ApiController
 
   def create
     raise AuthorizationException unless @storage.public_creating_enabled
-    @object = @objects.create!
+    @object = @objects.create! :creator_ip => request.remote_ip
     @object.update_attributes! filtered_params
     answer_ok
   end
