@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160422082523) do
+ActiveRecord::Schema.define(version: 20160422213405) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,12 +60,13 @@ ActiveRecord::Schema.define(version: 20160422082523) do
   add_index "fields", ["storage_id"], name: "index_fields_on_storage_id", using: :btree
 
   create_table "storages", force: :cascade do |t|
-    t.string   "name",                                    null: false
-    t.datetime "created_at",                              null: false
-    t.datetime "updated_at",                              null: false
-    t.integer  "account_id",                              null: false
-    t.boolean  "public_creating_enabled", default: false, null: false
-    t.boolean  "public_viewing_enabled",  default: false, null: false
+    t.string   "name",                                                          null: false
+    t.datetime "created_at",                                                    null: false
+    t.datetime "updated_at",                                                    null: false
+    t.integer  "account_id",                                                    null: false
+    t.boolean  "public_creating_enabled",                       default: false, null: false
+    t.boolean  "public_viewing_enabled",                        default: false, null: false
+    t.boolean  "email_notification_on_public_creation_enabled", default: false, null: false
   end
 
   add_index "storages", ["account_id"], name: "index_storages_on_account_id", using: :btree

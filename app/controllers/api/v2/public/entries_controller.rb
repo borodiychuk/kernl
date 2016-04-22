@@ -14,6 +14,7 @@ class Api::V2::Public::EntriesController < ApiController
     raise AuthorizationException unless @storage.public_creating_enabled
     @object = @objects.create! :creator_ip => request.remote_ip
     @object.update_attributes! filtered_params
+    NotificationsMailer.entry_creation(@object).deliver if @storage.email_notification_on_public_creation_enabled
     answer_ok
   end
 

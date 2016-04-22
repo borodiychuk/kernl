@@ -1,0 +1,7 @@
+h2 Neuer eintrag: #{@entry.storage.name}
+
+- @entry.values.map do |v|
+
+  p
+    b #{v.field.name}
+    | : #{simple_format v.exposed_value.to_s, {}, :wrapper_tag => :span}

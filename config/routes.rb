@@ -27,6 +27,6 @@ Rails.application.routes.draw do
 
   get  "app"    => "interface#application"
   get  "reauth" => "interface#reauth"
-  get  "*unmatched_route", :to => "interface#application"
+  get  "*unmatched_route", :to => "interface#application" if Rails.env.production?
   root "interface#landing"
 end
