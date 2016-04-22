@@ -1,5 +1,4 @@
 class Exports::EntriesController < PrivateController
-  require "CSV"
 
   def index
     @storage = @account.storages.find(params[:storage_id])
