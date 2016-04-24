@@ -2,7 +2,7 @@ class Api::V2::Private::EntriesController < Api::V2::PrivateController
 
   def index
     sortable_by = %w( id created_at updated_at )
-    render_paginated @objects.order(sorting sortable_by)
+    render_paginated @objects.includes(:fields, :values => :attachments).order(sorting sortable_by)
   end
 
   def show
