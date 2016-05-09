@@ -1,6 +1,5 @@
 class ApiController < ApplicationController
   respond_to :json
-  before_action :after_initialize
   after_filter  :set_version_header
 
   # See docs for status codes here: http://tools.ietf.org/html/draft-ietf-httpbis-p2-semantics-26#page-57
@@ -36,10 +35,6 @@ class ApiController < ApplicationController
   end
 
   protected
-
-  def after_initialize
-    # This method can be overriden in the inhericed controllers
-  end
 
   def set_version_header
     headers['X-Version'] = Settings.version
