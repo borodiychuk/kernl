@@ -18,7 +18,26 @@ class Api::V2::Private::StoragesController < Api::V2::PrivateController
     )
   end
 
+  def update
+    @object.update_attributes! filtered_params
+    show
+  end
+
+  def destroy
+    @object.destroy
+    answer_ok
+  end
+
+  def create
+    @object = @objects.create! filtered_params
+    update
+  end
+
   protected
+
+  def filtered_params
+    params.require(:storage).permit(:name, :public_creating_enabled, :email_notification_on_public_creation_enabled, :public_viewing_enabled)
+  end
 
   def after_initialize
     @objects = @account.storages

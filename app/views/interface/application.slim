@@ -16,13 +16,17 @@ body
               | {{ s.name }}
         .uk-navbar-flip
           ul.uk-navbar-nav
+            li ui-sref-active-if="storages.list" ng-show="$root.user.id"
+              a ui-sref="storages.list"
+                i.uk-icon.uk-icon-database.uk-text-warning>
+                | Datenbanken
             li ui-sref-active-if="profile" ng-show="$root.user.id"
               a ui-sref="profile"
                 i.uk-icon.uk-icon-cog.uk-text-warning>
                 | Benutzerkonto
             li
               a ng-click="signOut()"
-                i.uk-icon.uk-icon-power-off>
+                i.uk-icon.uk-icon-power-off.uk-text-danger>
                 | Abmelden
 
   main

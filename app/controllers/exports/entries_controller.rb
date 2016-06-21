@@ -6,7 +6,6 @@ class Exports::EntriesController < PrivateController
       format.csv do
         data = CSV.generate do |csv|
           entries = @objects.as_json
-          p entries
           break if entries.empty?
           csv << entries.first.keys
           entries.each{|e| csv << e.values}

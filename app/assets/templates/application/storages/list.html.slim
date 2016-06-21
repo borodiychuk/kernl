@@ -1,0 +1,47 @@
+article.uk-article
+  .uk-grid
+    .uk-width-2-3
+      h1.uk-article-title
+        i.uk-icon.uk-icon-database.uk-text-muted>
+        | Datenbanken
+    .uk-width-1-3.uk-text-right
+      a.uk-button.uk-button-large.uk-button-primary ui-sref="^.storage.edit({storage_id: 'new'})"
+        i.uk-icon.uk-icon-plus>
+        | Erstellen
+  p.uk-article-meta Verwalten Sie hier Ihre Datenbanken
+
+  hr.uk-article-divider
+
+  .uk-alert.uk-text-center ng-hide="storages.data.total" Keine Datensätze vorhanden
+
+  table.uk-table.uk-table-striped.uk-table-condensed.uk-table-hover ng-show="storages.data.total"
+    thead
+      tr
+        th.smallest.uk-text-nowrap.uk-text-right.action ng-click="storages.setOrderby('id')"
+          | #
+          i.uk-icon.uk-text-muted< ng-class="storages.headerClass('id')"
+        th.action ng-click="storages.setOrderby('name')"
+          | Name
+          i.uk-icon.uk-text-muted< ng-class="storages.headerClass('name')"
+        th.smallest.uk-text-nowrap.uk-text-center.action ng-click="storages.setOrderby('public_creating_enabled')"
+          | Öffentliche Erstellung
+          i.uk-icon.uk-text-muted< ng-class="storages.headerClass('public_creating_enabled')"
+        th.smallest.uk-text-nowrap.uk-text-center.action ng-click="storages.setOrderby('public_viewing_enabled')"
+          | Öffentliches Vorschau
+          i.uk-icon.uk-text-muted< ng-class="storages.headerClass('public_viewing_enabled')"
+    tbody
+      tr.action ui-sref="^.storage.edit({storage_id: s.id})" ng-repeat="s in storages.data.display"
+        td.uk-text-right
+          | {{ s.id | number }}
+        td.uk-text
+          | {{ s.name }}
+        td.uk-text.uk-text-center
+          i.uk-icon.uk-icon-check.uk-text-success ng-show="s.public_creating_enabled"
+          i.uk-icon.uk-icon-envelope-o.uk-text-success< ng-show="s.public_creating_enabled && s.email_notification_on_public_creation_enabled"
+        td.uk-text.uk-text-center
+          i.uk-icon.uk-icon-check.uk-text-success ng-show="s.public_viewing_enabled"
+
+
+  div pagination-for="storages"
+
+

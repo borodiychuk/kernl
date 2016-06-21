@@ -79,11 +79,20 @@ angular.module("app", [
       url: "/storages"
       templateUrl: "<%= asset_path "shared/abstract.html" %>"
 
+    $stateProvider.state "storages.list",
+      url: ""
+      templateUrl: "<%= asset_path "application/storages/list.html" %>"
+      controller:  "StoragesListCtrl"
+
     $stateProvider.state "storages.storage",
       abstract: true
       url: "/:storage_id"
-      controller:  "StoragesViewCtrl"
+      controller:  "StoragesEditCtrl"
       templateUrl: "<%= asset_path "shared/abstract.html" %>"
+
+    $stateProvider.state "storages.storage.edit",
+      url: ""
+      templateUrl: "<%= asset_path "application/storages/edit.html" %>"
 
     $stateProvider.state "storages.storage.entries",
       url: "/entries"

@@ -1,0 +1,66 @@
+article.uk-article
+  .uk-grid
+    .uk-width-2-3
+      h1.uk-article-title
+        a ui-sref="^.^.list"
+          i.uk-icon.uk-icon-tags.uk-text-muted>
+          | Datenbanken
+        span.uk-text-muted<> ›
+        span ng-show="new" Neu erstellen
+        span ng-hide="new"
+          span ng-hide="storage.title"
+            i.uk-icon-hashtag.uk-text-muted
+            | {{ storage.id | number }}
+          span ng-show="storage.title"
+            | {{ storage.title }}
+    .uk-width-1-3.uk-text-right
+      button.uk-button.uk-button-primary.uk-button-large< ng-disabled="storageForm.$invalid" ng-click="save()" ng-show="storageForm.$dirty"
+        i.uk-icon.uk-icon-check>
+        | Anwenden
+
+  p.uk-article-meta Datenbank einstellungen
+
+  hr.uk-article-divider
+
+
+  form.uk-form name="storageForm"
+    .uk-grid
+      .uk-width-1-2.uk-form-horizontal
+        .uk-form-row
+          label.uk-form-label Name
+          .uk-form-controls
+            input.uk-width-1-1 type="text" ng-model="storage.name" placeholder="" required=""
+
+      .uk-width-1-3.uk-push-1-6.uk-form-stacked
+
+        .uk-form-row
+          .uk-form-controls
+            label
+              input> type="checkbox" ng-model="storage.public_creating_enabled"
+              | Öffentliche Erstellung
+
+        .uk-form-row ng-show="storage.public_creating_enabled"
+          .uk-form-controls
+            label
+              input> type="checkbox" ng-model="storage.email_notification_on_public_creation_enabled"
+              | Bei öffentliche Erstellung mit Email benachrichtigen
+
+        .uk-form-row
+          .uk-form-controls
+            label
+              input> type="checkbox" ng-model="storage.public_viewing_enabled"
+              | Öffentliches Vorschau
+
+
+  .uk-margin-large-top
+    hr.uk-article-divider
+    button.uk-button.uk-button-danger.uk-float-left.uk-margin-right ng-click="delete()" ng-hide="new"
+      i.uk-icon.uk-icon-trash>
+      | Löschen
+    button.uk-button.uk-button.uk-float-left.uk-margin-right ng-click="reset()" ng-hide="new || storageForm.$pristine"
+      i.uk-icon.uk-icon-times>
+      | Abbrechen
+    button.uk-button.uk-button-primary.uk-float-right.uk-margin-left ng-disabled="storageForm.$invalid" ng-click="save()" ng-show="storageForm.$dirty"
+      i.uk-icon.uk-icon-check>
+      | Anwenden
+
