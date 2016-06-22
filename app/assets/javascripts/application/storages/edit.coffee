@@ -1,6 +1,6 @@
 angular.module("app.controllers").controller "StoragesEditCtrl", [
-  "$scope", "$state", "APIStorages", "StateChangeWarner", "UI"
-  ($scope,   $state,   APIStorages,   StateChangeWarner,   UI) ->
+  "$scope", "$rootScope", "$state", "APIStorages", "StateChangeWarner", "UI"
+  ($scope,   $rootScope,   $state,   APIStorages,   StateChangeWarner,   UI) ->
 
     $scope.new = $state.params.storage_id is "new"
     StateChangeWarner $scope, "storageForm.$dirty"
@@ -18,13 +18,19 @@ angular.module("app.controllers").controller "StoragesEditCtrl", [
       if $scope.new
         $scope.storage.$save {}, (data) ->
           $scope.storageForm.$setPristine()
-          $state.go "^.edit", storage_id: data.id
+          $rootScope.$broadcast "storages:update"
+          $state.go $state.current, storage_id: data.id
       else
-        $scope.storage.$update {}, $scope.storageForm.$setPristine
+        $scope.storage.$update {}, ->
+          $scope.storageForm.$setPristine
+          $rootScope.$broadcast "storages:update"
+
 
     $scope.delete = ->
       UI.confirm ->
         $scope.storage.$delete {}, (data) ->
+          $rootScope.$broadcast "storages:update"
+          $scope.storageForm.$setPristine
           $state.go "^.^.list"
 
 

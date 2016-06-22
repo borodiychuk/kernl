@@ -8,4 +8,6 @@ angular.module("app.controllers").controller "StoragesListCtrl", [
       params:
         limit: 100
 
+    $scope.$on "storages:update", $scope.storages.reload
+
 ]

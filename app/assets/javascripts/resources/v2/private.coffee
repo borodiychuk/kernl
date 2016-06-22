@@ -9,7 +9,6 @@ angular.module("app.resources.v2.private", ["ngResource"])
 .factory("APIEntries",  ["$resource", ($resource) ->
   $resource "/api/v2/private/entries/:id/:action.json", {id: "@id", storage_id: "@storage_id"},
     update: {method: "PUT"}
-    delete: {method: "DELETE"}
 ])
 
 
@@ -29,7 +28,6 @@ angular.module("app.resources.v2.private", ["ngResource"])
 .factory("APIAttachments",  ["$resource", ($resource) ->
   $resource "/api/v2/private/attachments/:id/:action.json", {id: "@id", value_id: "@value_id"},
     update: {method: "PUT"}
-    delete: {method: "DELETE"}
     order:  {method: "PUT", params: {action: "order"}}
 ])
 
@@ -39,7 +37,8 @@ angular.module("app.resources.v2.private", ["ngResource"])
 ##
 
 .factory("APIStorages",  ["$resource", ($resource) ->
-  $resource "/api/v2/private/storages/:id/:action.json", {id: "@id"}
+  $resource "/api/v2/private/storages/:id/:action.json", {id: "@id"},
+    update: {method: "PUT"}
 ])
 
 
