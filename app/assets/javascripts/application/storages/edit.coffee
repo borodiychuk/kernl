@@ -30,7 +30,6 @@ angular.module("app.controllers").controller "StoragesEditCtrl", [
       UI.confirm ->
         $scope.storage.$delete {}, (data) ->
           $rootScope.$broadcast "storages:update"
-          $scope.storageForm.$setPristine
           $state.go "^.^.list"
 
 

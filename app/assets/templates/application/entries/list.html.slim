@@ -8,7 +8,7 @@ article.uk-article
       a.uk-button.uk-button-large.uk-margin-right ng-href="/exports/entries.csv?storage_id={{ storage.id }}" target="_blank"
         i.uk-icon.uk-icon-download>
         | CSV
-      a.uk-button.uk-button-large.uk-button-primary ui-sref="^.entry({entry_id: 'new'})"
+      a.uk-button.uk-button-large.uk-button-primary ui-sref="^.edit({entry_id: 'new'})"
         i.uk-icon.uk-icon-plus>
         | Erstellen
   p.uk-article-meta Verwalten Sie hier Ihre Daten
@@ -35,7 +35,7 @@ article.uk-article
         th ng-repeat="f in storage.backend_list_fields"
           | {{ f.name }}
     tbody
-      tr.action ui-sref="^.entry({entry_id: e.id})" ng-repeat="e in entries.data.display"  ng-class="{'uk-text-muted': !e.enabled}"
+      tr.action ui-sref="^.edit({entry_id: e.id})" ng-repeat="e in entries.data.display"  ng-class="{'uk-text-muted': !e.enabled}"
         td.uk-text
           i.uk-icon-lock ng-hide="e.enabled"
         td.uk-text-right

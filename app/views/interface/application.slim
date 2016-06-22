@@ -11,7 +11,7 @@ body
             a ui-sref="landing"
               | Startseite
           li ng-repeat="s in storages.data.display" ng-class="{'uk-active': state.params.storage_id == s.id}"
-            a ui-sref="storages.storage.entries({storage_id: s.id})"
+            a ui-sref="storages.storage.entries.list({storage_id: s.id})"
               i.uk-icon.uk-icon-folder-open> ng-show="s.enabled"
               | {{ s.name }}
         .uk-navbar-flip

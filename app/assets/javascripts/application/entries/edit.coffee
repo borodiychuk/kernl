@@ -18,13 +18,13 @@ angular.module("app.controllers").controller "EntriesEditCtrl", [
       if $scope.new
         $scope.entry.$save {}, (data) ->
           $scope.entryForm.$setPristine()
-          $state.go "^.entry", entry_id: data.id
+          $state.go "^.edit", entry_id: data.id
       else
         $scope.entry.$update {}, $scope.entryForm.$setPristine
 
     $scope.delete = ->
       UI.confirm ->
         $scope.entry.$delete {}, (data) ->
-          $state.go "^.entries"
+          $state.go "^.list"
 
 ]
