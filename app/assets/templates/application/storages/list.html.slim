@@ -27,19 +27,23 @@ article.uk-article
           | Öffentliche Erstellung
           i.uk-icon.uk-text-muted< ng-class="storages.headerClass('public_creating_enabled')"
         th.smallest.uk-text-nowrap.uk-text-center.action ng-click="storages.setOrderby('public_viewing_enabled')"
-          | Öffentliches Vorschau
+          | Öffentliche Vorschau
           i.uk-icon.uk-text-muted< ng-class="storages.headerClass('public_viewing_enabled')"
+        th.smallest
     tbody
-      tr.action ui-sref="^.storage.edit({storage_id: s.id})" ng-repeat="s in storages.data.display"
-        td.uk-text-right
+      tr.action ng-repeat="s in storages.data.display"
+        td.uk-text-right ui-sref="^.storage.edit({storage_id: s.id})"
           | {{ s.id | number }}
-        td.uk-text
+        td ui-sref="^.storage.edit({storage_id: s.id})"
           | {{ s.name }}
-        td.uk-text.uk-text-center
+        td.uk-text-center ui-sref="^.storage.edit({storage_id: s.id})"
           i.uk-icon.uk-icon-check.uk-text-success ng-show="s.public_creating_enabled"
           i.uk-icon.uk-icon-envelope-o.uk-text-success< ng-show="s.public_creating_enabled && s.email_notification_on_public_creation_enabled"
-        td.uk-text.uk-text-center
+        td.uk-text-center ui-sref="^.storage.edit({storage_id: s.id})"
           i.uk-icon.uk-icon-check.uk-text-success ng-show="s.public_viewing_enabled"
+        td ui-sref="^.storage.fields.list({storage_id: s.id})"
+          a
+            i.uk-icon-list
 
 
   div pagination-for="storages"

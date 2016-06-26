@@ -1,0 +1,82 @@
+article.uk-article
+  .uk-grid
+    .uk-width-2-3
+      h1.uk-article-title
+        a ui-sref="^.list"
+          i.uk-icon.uk-icon-list.uk-text-muted>
+          | {{ storage.name }}
+        span.uk-text-muted<> ›
+        span ng-show="new" Spalte erstellen
+        span ng-hide="new" Spalte bearbeiten
+    .uk-width-1-3.uk-text-right
+      button.uk-button.uk-button-primary.uk-button-large< ng-disabled="storageForm.$invalid" ng-click="save()" ng-show="storageForm.$dirty"
+        i.uk-icon.uk-icon-check>
+        | Anwenden
+
+  p.uk-article-meta Datenbank Konfuguration
+  .uk-alert.uk-alert-danger
+    i.uk-icon-exclamation-circle>
+    | Pay attention that these settings are not for everyday usage, and operating with them you should understand what are you doing!
+
+  hr.uk-article-divider
+
+  .uk-grid
+    .uk-width-7-10
+      form.uk-form.uk-form-horizontal name="fieldForm"
+
+        .uk-form-row
+          label.uk-form-label
+            | Typ
+          .uk-form-controls
+            select.uk-width-1-1 ng-model="field.content_type" ng-disabled="!new" required=""
+              option value="" — bitte Auswählen —
+              option value="boolean" Checkbox
+              option value="string" String
+              option value="text" Text
+              option value="html" HTML
+              option value="enum" Auswahl
+              option value="file" Datei(n)
+
+
+        .uk-form-row
+          label.uk-form-label
+            | Identifier
+          .uk-form-controls
+            input.uk-width-1-1 type="text" ng-model="field.identifier" placeholder="" required=""
+            p.uk-form-help-block.uk-text-small.uk-text-muted Unique pro Datenbank
+
+        .uk-form-row
+          label.uk-form-label
+            | Name
+          .uk-form-controls
+            input.uk-width-1-1 type="text" ng-model="field.name" placeholder=""
+
+        .uk-form-row
+          label.uk-form-label
+            | Ordering
+          .uk-form-controls
+            input.uk-width-1-1 type="number" ng-model="field.ordering" placeholder=""
+            p.uk-form-help-block.uk-text-small.uk-text-muted The bigger goes down
+
+        .uk-form-row
+          .uk-form-controls
+            label
+              input> type="checkbox" ng-model="field.shown_in_backend_list"
+              | Im Tabellenansicht anzeigen
+
+    .uk-width-2-10.uk-push-1-10
+
+
+
+  .uk-margin-large-top
+    hr.uk-article-divider
+    button.uk-button.uk-button-danger.uk-float-left.uk-margin-right ng-click="delete()" ng-hide="new"
+      i.uk-icon.uk-icon-trash>
+      | Löschen
+    button.uk-button.uk-button.uk-float-left.uk-margin-right ng-click="reset()" ng-hide="new || fieldForm.$pristine"
+      i.uk-icon.uk-icon-times>
+      | Abbrechen
+    button.uk-button.uk-button-primary.uk-float-right.uk-margin-left ng-disabled="fieldForm.$invalid" ng-click="save()" ng-show="fieldForm.$dirty"
+      i.uk-icon.uk-icon-check>
+      | Anwenden
+

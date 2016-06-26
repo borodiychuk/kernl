@@ -72,7 +72,7 @@ article.uk-article
             select ng-model="entry[f.identifier]" ng-options="o.key as o.description for o in f.options.dictionary"
               option value="" — bitte wählen —
 
-        / A single file or a reference to url
+        / A single file
         .uk-form-row ng-if="f.content_type == 'file'"
           label.uk-form-label
             | {{ f.name }}

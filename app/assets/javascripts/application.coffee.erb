@@ -115,6 +115,23 @@ angular.module("app", [
       templateUrl: "<%= asset_path "application/entries/edit.html" %>"
       controller:  "EntriesEditCtrl"
 
+    # Here StoragesEditCtrl provides storage info to child scopes
+    $stateProvider.state "storages.storage.fields",
+      abstract: true
+      url: "/fields"
+      templateUrl: "<%= asset_path "shared/abstract.html" %>"
+      controller:  "StoragesEditCtrl"
+
+    $stateProvider.state "storages.storage.fields.list",
+      url: ""
+      templateUrl: "<%= asset_path "application/fields/list.html" %>"
+      controller:  "FieldsListCtrl"
+
+    $stateProvider.state "storages.storage.fields.edit",
+      url: "/:field_id"
+      templateUrl: "<%= asset_path "application/fields/edit.html" %>"
+      controller:  "FieldsEditCtrl"
+
 
     ##
     ##  Settings

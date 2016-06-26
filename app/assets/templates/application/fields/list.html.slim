@@ -1,0 +1,50 @@
+article.uk-article
+  .uk-grid
+    .uk-width-2-3
+      h1.uk-article-title
+        i.uk-icon.uk-icon-list.uk-text-muted>
+        | {{ storage.name }}
+    .uk-width-1-3.uk-text-right
+      a.uk-button.uk-button-large.uk-button-primary ui-sref="^.edit({field_id: 'new'})"
+        i.uk-icon.uk-icon-plus>
+        | Erstellen
+  p.uk-article-meta Datenbank Konfuguration
+
+  hr.uk-article-divider
+
+  .uk-alert.uk-text-center ng-hide="fields.data.total" Keine Datensätze vorhanden
+
+  table.uk-table.uk-table-striped.uk-table-condensed.uk-table-hover ng-show="fields.data.total"
+    thead
+      tr
+        th.smallest.uk-text-nowrap.uk-text-right
+          | Typ
+        th.smallest.uk-text-nowrap
+          | ID
+        th.smallest.uk-text-nowrap.uk-text-center
+          i.uk-icon-table
+        th
+          | Name
+        th.smallest.uk-text-nowrap.uk-text-center
+          | Ord.
+    tbody
+      tr.action ui-sref="^.edit({field_id: f.id})" ng-repeat="f in fields.data.display"
+        td.uk-text-right.uk-text-primary
+          span ng-if="f.content_type == 'boolean'" Checkbox
+          span ng-if="f.content_type == 'string'" String
+          span ng-if="f.content_type == 'text'" Text
+          span ng-if="f.content_type == 'html'" HTML
+          span ng-if="f.content_type == 'enum'" Auswahl
+          span ng-if="f.content_type == 'file'" Datei(n)
+        td.uk-text-danger
+          | :{{ f.identifier }}
+        td.uk-text-center
+          i.uk-icon.uk-icon-check.uk-text-success ng-show="f.shown_in_backend_list"
+        td
+          | {{ f.name }}
+        td.uk-text-muted.uk-text-center
+          | {{ f.ordering }}
+
+  div pagination-for="fields"
+
+

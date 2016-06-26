@@ -7,8 +7,14 @@ class Field < ActiveRecord::Base
 
   scope :backend_list_listed, ->() { where(:shown_in_backend_list => true) }
 
+  #attr_accessor :content_type
+
   def content_type
     type.underscore.split("/").last.to_sym
+  end
+
+  def content_type= value
+    self[:type] = "field/#{value}".camelize
   end
 
   def store! value, entry

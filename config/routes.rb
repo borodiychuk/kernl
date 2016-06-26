@@ -10,6 +10,7 @@ Rails.application.routes.draw do
       namespace :private do
         resource :profile
         resources :storages
+        resources :fields
         resources :entries
         resources :values
         resources :attachments do

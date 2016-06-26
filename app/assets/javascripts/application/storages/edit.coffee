@@ -22,7 +22,7 @@ angular.module("app.controllers").controller "StoragesEditCtrl", [
           $state.go $state.current, storage_id: data.id
       else
         $scope.storage.$update {}, ->
-          $scope.storageForm.$setPristine
+          $scope.storageForm.$setPristine()
           $rootScope.$broadcast "storages:update"
 
 

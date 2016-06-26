@@ -51,3 +51,12 @@ angular.module("app.resources.v2.private", ["ngResource"])
     update: {method: "PUT"}
 ])
 
+
+##
+##  Fields
+##
+
+.factory("APIFields",  ["$resource", ($resource) ->
+  $resource "/api/v2/private/fields/:id/:action.json", {id: "@id"},
+    update: {method: "PUT"}
+])
