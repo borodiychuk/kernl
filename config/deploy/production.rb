@@ -1,2 +1,2 @@
 # Production server
-server 'b.markusweb.com', :user => 'dre', :roles => [:web, :app, :db], :primary => true
+server 'kernl.rocks', :user => 'kernl', :roles => [:web, :app, :db], :primary => true
