@@ -3,7 +3,7 @@ lock '3.4.0'
 
 set :repo_url,      "git@github.com:borodiychuk/kernl.git"
 set :application,   "kernl"
-set :user,          "dre"
+set :user,          "kernl"
 set :deploy_to,     "/srv/#{fetch(:application)}"
 set :format,        :pretty
 set :log_level,     :debug
