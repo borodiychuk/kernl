@@ -4,7 +4,7 @@ body
     .uk-container.uk-container-center
       nav.uk-navbar
         span.uk-navbar-brand
-          i.uk-icon.uk-icon-diamond.uk-text-danger>
+          i.uk-icon-diamond.uk-text-danger>
           b kernl
         ul.uk-navbar-nav ng-controller="StoragesListCtrl" ng-show="$root.user.id"
           li ui-sref-active-if="landing"
@@ -12,21 +12,21 @@ body
               | Startseite
           li ng-repeat="s in storages.data.display" ng-class="{'uk-active': state.params.storage_id == s.id}"
             a ui-sref="storages.storage.entries.list({storage_id: s.id})"
-              i.uk-icon.uk-icon-folder-open> ng-show="s.enabled"
+              i.uk-icon-folder-open> ng-show="s.enabled"
               | {{ s.name }}
         .uk-navbar-flip
           ul.uk-navbar-nav
             li ui-sref-active-if="storages.list" ng-show="$root.user.id"
               a ui-sref="storages.list"
-                i.uk-icon.uk-icon-database.uk-text-warning>
+                i.uk-icon-database.uk-text-warning>
                 | Datenbanken
             li ui-sref-active-if="profile" ng-show="$root.user.id"
               a ui-sref="profile"
-                i.uk-icon.uk-icon-cog.uk-text-warning>
+                i.uk-icon-cog.uk-text-warning>
                 | Benutzerkonto
             li
               a ng-click="signOut()"
-                i.uk-icon.uk-icon-power-off.uk-text-danger>
+                i.uk-icon-power-off.uk-text-danger>
                 | Abmelden
 
   main

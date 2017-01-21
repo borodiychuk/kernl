@@ -3,7 +3,7 @@ article.uk-article
     .uk-width-2-3
       h1.uk-article-title
         a ui-sref="^.entries"
-          i.uk-icon.uk-icon-tags.uk-text-muted>
+          i.uk-icon-tags.uk-text-muted>
           | {{ storage.name }}
         span.uk-text-muted<> ›
         span ng-show="new" Neu erstellen
@@ -15,10 +15,10 @@ article.uk-article
             | {{ entry.title }}
     .uk-width-1-3.uk-text-right
       a.uk-button.uk-button-large< ng-show="entryForm.$pristine" ng-href="/exports/entries/{{ entry.id }}.xml?storage_id={{ entry.storage_id }}" target="_blank"
-        i.uk-icon.uk-icon-download>
+        i.uk-icon-download>
         | XML
       button.uk-button.uk-button-primary.uk-button-large< ng-disabled="entryForm.$invalid" ng-click="save()" ng-show="entryForm.$dirty"
-        i.uk-icon.uk-icon-check>
+        i.uk-icon-check>
         | Anwenden
   p.uk-article-meta Verwalten Sie hier Ihre Daten
 
@@ -78,7 +78,7 @@ article.uk-article
             | {{ f.name }}
           .uk-form-controls ng-controller="AttachmentsCtrl" ng-init="init(f.identifier)"
             .uk-placeholder.uk-text-center ngf-select="uploadFiles($files)" ngf-drop="uploadFiles($files)" ngf-multiple="true"  ng-disabled="progress.status != 'ready'" ng-class="{action: progress.status == 'ready'}" ngf-drag-over-class="{accept: 'uk-text-success', reject: 'uk-text-danger'}" ng-show="progress.status == 'ready'"
-              i.uk-icon.uk-icon-image>
+              i.uk-icon-image>
               | Entweder in das Feld klicken oder Dateien hierher ziehen
 
             .uk-grid ng-repeat-start="f in progress.files" ng-hide="progress.status == 'ready'"
@@ -95,11 +95,11 @@ article.uk-article
               .uk-thumbnail.uk-margin-small-right.uk-margin-small-bottom.uk-clearfix.uk-visible-hover ng-repeat="f in files" style="position: relative"
                 img ng-src="{{ f.file_thumbnail_url || '#{image_path 'placeholder.png'}' }}"
                 button.uk-button.uk-button-danger.uk-button-mini.uk-position-bottom-left.uk-hidden.uk-margin-small-left.uk-margin-small-bottom ng-click="deleteFile(f)"
-                  i.uk-icon.uk-icon-times
+                  i.uk-icon-times
                 a.uk-button.uk-button-primary.uk-button-mini.uk-position-bottom-right.uk-hidden.uk-margin-small-right.uk-margin-small-bottom data-uk-lightbox="{group: 'gallery'}" ng-href="{{ f.file_url }}" ng-if="f.file_thumbnail_url"
-                  i.uk-icon.uk-icon-eye
+                  i.uk-icon-eye
                 a.uk-button.uk-button-primary.uk-button-mini.uk-position-bottom-right.uk-hidden.uk-margin-small-right.uk-margin-small-bottom target="_blank" ng-href="{{ f.file_url }}" ng-if="!f.file_thumbnail_url"
-                  i.uk-icon.uk-icon-download
+                  i.uk-icon-download
 
         .uk-hidden ng-repeat-end="" ng-if=""
 
@@ -111,12 +111,12 @@ article.uk-article
   .uk-margin-large-top
     hr.uk-article-divider
     button.uk-button.uk-button-danger.uk-float-left.uk-margin-right ng-click="delete()" ng-hide="new"
-      i.uk-icon.uk-icon-trash>
+      i.uk-icon-trash>
       | Löschen
     button.uk-button.uk-button.uk-float-left.uk-margin-right ng-click="reset()" ng-hide="new || entryForm.$pristine"
-      i.uk-icon.uk-icon-times>
+      i.uk-icon-times>
       | Abbrechen
     button.uk-button.uk-button-primary.uk-float-right.uk-margin-left ng-disabled="entryForm.$invalid" ng-click="save()" ng-show="entryForm.$dirty"
-      i.uk-icon.uk-icon-check>
+      i.uk-icon-check>
       | Anwenden
 

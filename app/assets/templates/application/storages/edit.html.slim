@@ -3,7 +3,7 @@ article.uk-article
     .uk-width-2-3
       h1.uk-article-title
         a ui-sref="^.^.list"
-          i.uk-icon.uk-icon-database.uk-text-muted>
+          i.uk-icon-database.uk-text-muted>
           | Datenbanken
         span.uk-text-muted<> ›
         span ng-show="new" Neu erstellen
@@ -15,7 +15,7 @@ article.uk-article
             | {{ storage.title }}
     .uk-width-1-3.uk-text-right
       button.uk-button.uk-button-primary.uk-button-large< ng-disabled="storageForm.$invalid" ng-click="save()" ng-show="storageForm.$dirty"
-        i.uk-icon.uk-icon-check>
+        i.uk-icon-check>
         | Anwenden
 
   p.uk-article-meta Datenbank Einstellungen
@@ -74,12 +74,12 @@ article.uk-article
   .uk-margin-large-top
     hr.uk-article-divider
     button.uk-button.uk-button-danger.uk-float-left.uk-margin-right ng-click="delete()" ng-hide="new"
-      i.uk-icon.uk-icon-trash>
+      i.uk-icon-trash>
       | Löschen
     button.uk-button.uk-button.uk-float-left.uk-margin-right ng-click="reset()" ng-hide="new || storageForm.$pristine"
-      i.uk-icon.uk-icon-times>
+      i.uk-icon-times>
       | Abbrechen
     button.uk-button.uk-button-primary.uk-float-right.uk-margin-left ng-disabled="storageForm.$invalid" ng-click="save()" ng-show="storageForm.$dirty"
-      i.uk-icon.uk-icon-check>
+      i.uk-icon-check>
       | Anwenden
 

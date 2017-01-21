@@ -2,11 +2,11 @@ article.uk-article
   .uk-grid
     .uk-width-2-3
       h1.uk-article-title
-        i.uk-icon.uk-icon-list.uk-text-muted>
+        i.uk-icon-list.uk-text-muted>
         | {{ storage.name }}
     .uk-width-1-3.uk-text-right
       a.uk-button.uk-button-large.uk-button-primary ui-sref="^.edit({field_id: 'new'})"
-        i.uk-icon.uk-icon-plus>
+        i.uk-icon-plus>
         | Erstellen
   p.uk-article-meta Datenbank Konfuguration
 
@@ -39,7 +39,7 @@ article.uk-article
         td.uk-text-danger
           | :{{ f.identifier }}
         td.uk-text-center
-          i.uk-icon.uk-icon-check.uk-text-success ng-show="f.shown_in_backend_list"
+          i.uk-icon-check.uk-text-success ng-show="f.shown_in_backend_list"
         td
           | {{ f.name }}
         td.uk-text-muted.uk-text-center
