@@ -33,8 +33,18 @@ article.uk-article
           label.uk-form-label Name
           .uk-form-controls
             input.uk-width-1-1 type="text" ng-model="storage.name" placeholder="" required=""
+        .uk-form-row ng-show="storage.recaptcha_protected"
+          label.uk-form-label reCAPTCHA secret key
+          .uk-form-controls
+            input.uk-width-1-1 type="text" ng-model="storage.recaptcha_secret_key" placeholder="6Lxxxxxxxxxxxxxxxxxxxx_xxxxxxxxxxxxxxxxx"
 
       .uk-width-1-3.uk-push-1-6.uk-form-stacked
+
+        .uk-form-row
+          .uk-form-controls
+            label
+              input> type="checkbox" ng-model="storage.public_viewing_enabled"
+              | Öffentliche Vorschau
 
         .uk-form-row
           .uk-form-controls
@@ -48,12 +58,18 @@ article.uk-article
               input> type="checkbox" ng-model="storage.email_notification_on_public_creation_enabled"
               | Bei öffentliche Erstellung mit Email benachrichtigen
 
-        .uk-form-row
+        .uk-form-row ng-show="storage.public_creating_enabled"
           .uk-form-controls
             label
-              input> type="checkbox" ng-model="storage.public_viewing_enabled"
-              | Öffentliche Vorschau
-
+              input> type="checkbox" ng-model="storage.recaptcha_protected"
+              | reCAPTCHA protection on public creation
+            .uk-form-help-block.uk-text-small.uk-text-muted ng-show="storage.recaptcha_protected"
+              | You are supposed to implement
+              a<> href="https://developers.google.com/recaptcha/" target="_blank"
+                | reCAPTCHA workflow
+                i.uk-icon-external-link<
+              | at client side and pass "g-recaptcha-response" parameter to API
+            .uk-form-help-block.uk-text-small.uk-text-danger ng-show="storage.recaptcha_protected && !storage.recaptcha_secret_key" You have not setup a secret key. Without that it will not work
 
   .uk-margin-large-top
     hr.uk-article-divider

@@ -36,7 +36,7 @@ class Api::V2::Private::StoragesController < Api::V2::PrivateController
   protected
 
   def filtered_params
-    params.require(:storage).permit(:name, :public_creating_enabled, :email_notification_on_public_creation_enabled, :public_viewing_enabled)
+    params.require(:storage).permit(:name, :public_creating_enabled, :email_notification_on_public_creation_enabled, :public_viewing_enabled, :recaptcha_protected, :recaptcha_secret_key)
   end
 
   def after_initialize

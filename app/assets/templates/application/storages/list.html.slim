@@ -39,6 +39,7 @@ article.uk-article
         td.uk-text-center ui-sref="^.storage.edit({storage_id: s.id})"
           i.uk-icon.uk-icon-check.uk-text-success ng-show="s.public_creating_enabled"
           i.uk-icon.uk-icon-envelope-o.uk-text-success< ng-show="s.public_creating_enabled && s.email_notification_on_public_creation_enabled"
+          i.uk-icon.uk-icon-exclamation-triangle.uk-text-success< ng-show="s.public_creating_enabled && s.recaptcha_protected"
         td.uk-text-center ui-sref="^.storage.edit({storage_id: s.id})"
           i.uk-icon.uk-icon-check.uk-text-success ng-show="s.public_viewing_enabled"
         td ui-sref="^.storage.fields.list({storage_id: s.id})"

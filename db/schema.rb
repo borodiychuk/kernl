@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160422213405) do
+ActiveRecord::Schema.define(version: 20170121085120) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -67,6 +67,8 @@ ActiveRecord::Schema.define(version: 20160422213405) do
     t.boolean  "public_creating_enabled",                       default: false, null: false
     t.boolean  "public_viewing_enabled",                        default: false, null: false
     t.boolean  "email_notification_on_public_creation_enabled", default: false, null: false
+    t.boolean  "recaptcha_protected",                           default: false, null: false
+    t.string   "recaptcha_secret_key",                          default: "",    null: false
   end
 
   add_index "storages", ["account_id"], name: "index_storages_on_account_id", using: :btree
