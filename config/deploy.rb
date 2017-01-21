@@ -21,7 +21,7 @@ set :linked_dirs,  fetch(:linked_dirs, []).push("log", "tmp/pids", "tmp/cache", 
 
 # SCM Settings
 set :scm,    :git
-set :branch, "develop"
+set :branch, "master"
 set :git_strategy, Capistrano::Git::SubmoduleStrategy
 
 # RVM settings
