@@ -14,7 +14,7 @@ class Api::V2::Public::EntriesController < ApiController
 
   def create
     raise AuthorizationException unless @storage.public_creating_enabled
-    raise GenericException.new("reCAPTCHA protection thinks you are robot") unless verify_recaptcha(:secret_key => @storage.recaptcha_secret_key)
+    raise GenericException.new("reCAPTCHA protection thinks you are robot") if @storage.recaptcha_protected && !verify_recaptcha(:secret_key => @storage.recaptcha_secret_key)
     @object = @objects.create! :creator_ip => request.remote_ip
     @object.update_attributes! filtered_params
     NotificationsMailer.entry_creation(@object).deliver if @storage.email_notification_on_public_creation_enabled
