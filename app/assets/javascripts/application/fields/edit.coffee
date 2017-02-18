@@ -30,4 +30,20 @@ angular.module("app.controllers").controller "FieldsEditCtrl", [
           $state.go "^.list"
 
 
+    ##
+    ##  Enum-related logic
+    ##
+
+    $scope.addDictionaryItem = ->
+      $scope.field.options = {} unless $scope.field.options
+      $scope.field.options.dictionary = [] unless $scope.field.options.dictionary
+      $scope.field.options.dictionary.push key: "", description: ""
+      $scope.fieldForm.$setDirty()
+
+    $scope.deleteDictionaryItem = (index) ->
+      UI.confirm ->
+        $scope.$evalAsync ->
+          $scope.field.options.dictionary.splice index, 1
+          $scope.fieldForm.$setDirty()
+
 ]

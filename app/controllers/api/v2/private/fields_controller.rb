@@ -30,11 +30,15 @@ class Api::V2::Private::FieldsController < Api::V2::PrivateController
   protected
 
   def filtered_params_creation
-    params.permit(:content_type, :identifier, :name, :ordering, :shown_in_backend_list)
+    params.permit(:content_type, :identifier, :name, :ordering, :shown_in_backend_list).tap do |whitelisted|
+      whitelisted[:options] = params[:options]
+    end
   end
 
   def filtered_params_update
-    params.require(:field).permit(:identifier, :name, :ordering, :shown_in_backend_list)
+    params.require(:field).permit(:identifier, :name, :ordering, :shown_in_backend_list).tap do |whitelisted|
+      whitelisted[:options] = params[:options]
+    end
   end
 
   def after_initialize
