@@ -69,7 +69,7 @@ article.uk-article
           label.uk-form-label
             | {{ f.name }}
           .uk-form-controls
-            select ng-model="entry[f.identifier]" ng-options="o.key as o.description for o in f.options.dictionary"
+            select ng-model="entry[f.identifier]" ng-options="o.key as o.description group by o.group for o in f.options.dictionary track by $index"
               option value="" — bitte wählen —
 
         / A single file
