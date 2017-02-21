@@ -4,7 +4,8 @@ class Api::V2::Public::EntriesController < ApiController
 
   def index
     raise AuthorizationException unless @storage.public_viewing_enabled
-    render :json => @objects.includes(:fields, :values => :attachments)
+    fields = params[:fields].to_s.split(",").map(&:to_sym)
+    render :json => @objects.includes(:fields, :values => :attachments).to_json(only: fields)
   end
 
   def show

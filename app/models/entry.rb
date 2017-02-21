@@ -18,7 +18,9 @@ class Entry < ActiveRecord::Base
   def as_json params = {}
     result = attributes
     values.each do |v|
-      result[v.field.identifier] = v.exposed_value
+      # We do it inside values because we have already queued them
+      # Otherwise optimization (show less data) may lead into a complication (extra query per each entry)
+      result[v.field.identifier] = v.exposed_value if params[:only].blank? || params[:only].include?(v.field.identifier.to_sym)
     end
     result
   end
