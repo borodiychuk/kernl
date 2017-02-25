@@ -25,4 +25,17 @@ class Entry < ActiveRecord::Base
     result
   end
 
+
+  ##
+  ##  Touchable logic
+  ##
+
+  include AsyncTouchable
+  include ChainToucher
+
+  def chain_touch_callback
+    storage.touch!
+  end
+
+
 end

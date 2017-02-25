@@ -27,6 +27,17 @@ class Attachment < ActiveRecord::Base
     file.thumb('100x100#').url if thumbnailable?
   end
 
+
+  ##
+  ##  Touchable logic
+  ##
+
+  include ChainToucher
+
+  def chain_touch_callback
+    value.touch!
+  end
+
   private
 
   def thumbnailable?

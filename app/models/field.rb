@@ -26,6 +26,22 @@ class Field < ActiveRecord::Base
     value.data["value"] if value && value.data
   end
 
+
+  ##
+  ##  Touchable logic
+  ##
+
+  # TODO: somehow it throws error on including a concern, so I need to put its content here
+  after_create  :chain_touch_callback
+  after_save    :chain_touch_callback
+  after_destroy :chain_touch_callback
+  after_touch   :chain_touch_callback
+
+  def chain_touch_callback
+    storage.touch!
+  end
+
+
   protected
 
   def normalize value

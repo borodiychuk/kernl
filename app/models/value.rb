@@ -16,4 +16,16 @@ class Value < ActiveRecord::Base
     field.expose self
   end
 
+
+  ##
+  ##  Touchable logic
+  ##
+
+  include AsyncTouchable
+  include ChainToucher
+
+  def chain_touch_callback
+    entry.touch!
+  end
+
 end

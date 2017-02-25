@@ -12,4 +12,11 @@ class Storage < ActiveRecord::Base
     fields.backend_list_listed
   end
 
+
+  ##
+  ##  Touchable logic
+  ##
+
+  include AsyncTouchable
+
 end
