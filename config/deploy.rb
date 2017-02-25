@@ -39,6 +39,18 @@ set :puma_preload_app,        true
 set :puma_worker_timeout,     nil
 set :puma_init_active_record, false
 
+# Sidekiq settings
+set :sidekiq_options,              nil
+set :sidekiq_require,              nil
+set :sidekiq_tag,                  nil
+set :sidekiq_config,               nil
+set :sidekiq_queue,                %w(default)
+set :sidekiq_timeout,              10
+set :sidekiq_role,                 :app
+set :sidekiq_options_per_process,  nil
+set :sidekiq_concurrency,          nil
+set :sidekiq_processes,            1
+set :sidekiq_concurrency,          1
 
 namespace :puma do
   desc "Create Directories for Puma Pids and Socket"
