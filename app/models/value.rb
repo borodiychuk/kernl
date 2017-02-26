@@ -25,7 +25,7 @@ class Value < ActiveRecord::Base
   include ChainToucher
 
   def chain_touch_callback
-    entry.touch!
+    entry.touch! if entry
   end
 
 end
